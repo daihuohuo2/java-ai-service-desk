@@ -1,0 +1,16 @@
+groups:
+  - name: service-desk
+    rules:
+      - alert: ServiceDeskUnavailable
+        expr: up{job="service-desk"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service Desk metrics endpoint unavailable"
+      - alert: KnowledgeIndexFailures
+        expr: increase(desk_index_jobs_total{result="failed"}[10m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Knowledge indexing exhausted its retry budget"

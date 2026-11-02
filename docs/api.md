@@ -1,5 +1,24 @@
 # HTTP 接口说明
 
+## 全栈扩展接口（2026-11-02）
+
+路径均位于 `/api` 下，沿用会话、CSRF 和角色权限。
+
+| 方法 / 路径 | 参数与响应 | 权限 |
+|---|---|---|
+| GET /orders/page | `page=1&size=10&status=DELIVERED&query=ZS20261030001`，返回 `{items,total,page,size,pages}` | 本人订单，query 匹配订单号 |
+| GET /tickets/page | 同上，status 使用工单状态 | 客户本人，客服/管理员全部 |
+| GET /tickets/export | status/query 同筛选；UTF-8 BOM CSV，超过 1000 行拒绝，需缩小筛选 | 与工单列表相同 |
+| GET /knowledge/jobs | 最近 50 个索引任务 | ADMIN |
+| GET /knowledge/jobs/{id} | 任务状态、attempts、indexed/total、error | ADMIN |
+| POST /knowledge/jobs | `{}` 或 `{"documentId":"文档ID"}`，Idempotency-Key 必填，返回 202 | ADMIN |
+| POST /knowledge/jobs/{id}/retry | 仅 FAILED 允许，重置次数后排队 | ADMIN |
+
+page 为 1–1,000,000，size 为 1–100；订单 query 最多 40 字符，工单 query 最多 120 字符。百分号与下划线按普通文字匹配。非法分页/状态返回 400，权限与归属限制保持不变。CSV 对单元格进行引号转义与公式前缀处理。
+
+任务状态为 PENDING → RUNNING → SUCCEEDED；失败进入 RETRY，最多 3 次后 FAILED。一次尝试结束时更新计数，运行中不提供逐片段进度。相同管理员、幂等键和内容返回原任务，不同内容返回 409。202 只表示持久化成功，不表示模型完成。旧同步 reindex API 继续保留。
+
+
 入口为 `http://127.0.0.1:19082/api`。JSON 默认 UTF-8。会话 Cookie 为 `DESK_SESSION`，HttpOnly、SameSite=Strict；正式 HTTPS 环境应配置 Secure。所有非 GET 请求（含登录/退出）需 `X-CSRF-TOKEN`。
 
 健康检查：通过 Nginx 访问 `/health`；Java 容器内部为 `/actuator/health`。两个路径不要混用。

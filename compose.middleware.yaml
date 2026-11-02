@@ -1,0 +1,43 @@
+services:
+  redis:
+    image: redis:8.2-alpine
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-${DATABASE_PASSWORD:?Set DATABASE_PASSWORD}}
+    command: ["sh", "-c", "exec redis-server --appendonly yes --requirepass \"$$REDIS_PASSWORD\""]
+    volumes: [desk-redis:/data]
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$$REDIS_PASSWORD\" redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-desk}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-${DATABASE_PASSWORD:?Set DATABASE_PASSWORD}}
+    volumes: [desk-rabbitmq:/var/lib/rabbitmq]
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  api:
+    environment:
+      REDIS_ENABLED: "true"
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-${DATABASE_PASSWORD}}
+      CACHE_NAMESPACE: ${CACHE_NAMESPACE:-desk}
+      RABBITMQ_ENABLED: "true"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER:-desk}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-${DATABASE_PASSWORD}}
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+volumes:
+  desk-redis:
+  desk-rabbitmq:

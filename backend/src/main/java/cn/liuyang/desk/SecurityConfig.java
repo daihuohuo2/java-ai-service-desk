@@ -20,7 +20,7 @@ public class SecurityConfig {
         var source = new UrlBasedCorsConfigurationSource(); source.registerCorsConfiguration("/api/**",cors);
         http.cors(c->c.configurationSource(source))
             .csrf(c->c.csrfTokenRepository(csrf).csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
-            .authorizeHttpRequests(a->a.requestMatchers("/api/auth/csrf","/api/auth/login","/api/meta","/actuator/health").permitAll()
+            .authorizeHttpRequests(a->a.requestMatchers("/api/auth/csrf","/api/auth/login","/api/meta","/actuator/health","/actuator/prometheus").permitAll()
                 .requestMatchers("/api/knowledge/**","/api/admin/audit","/api/admin/products/**").hasRole("ADMIN")
                 .requestMatchers("/api/admin/**").hasAnyRole("ADMIN","AGENT").requestMatchers("/api/**").authenticated().anyRequest().denyAll())
             .exceptionHandling(e->e.authenticationEntryPoint((req,res,ex)->{res.setStatus(401);res.setContentType("application/json;charset=UTF-8");res.getWriter().write("{\"error\":\"请先登录\"}");})

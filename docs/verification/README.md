@@ -1,5 +1,7 @@
 # 公开验收记录
 
+2026-11-02 全栈扩展结果位于 [fullstack-20261102/summary.json](fullstack-20261102/summary.json)，包括数据库/中间件、浏览器及部署验收。下方记录是历史版本，不表示新增功能已经在旧记录中验收。
+
 这里保留 2026-10-30 初版和 2026-10-31 Spring Boot 4 升级后的本机测试证据。演示用户、订单和商品均为虚构。当前提交是否通过自动构建，请查看 [GitHub Actions](https://github.com/daihuohuo2/java-ai-service-desk/actions/workflows/ci.yml)。
 
 升级后的最终结果位于 `boot-upgrade-20261031/`：

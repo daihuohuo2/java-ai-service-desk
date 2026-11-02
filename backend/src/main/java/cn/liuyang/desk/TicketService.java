@@ -26,7 +26,7 @@ public class TicketService {
         var existing=s.db.queryForList("SELECT id,request_hash FROM tickets WHERE request_key=?",requestKey);
         if(!existing.isEmpty()){if(!hash.equals(existing.getFirst().get("request_hash")))throw new ApiException(409,"同一提交标识不能用于不同内容");return get((String)existing.getFirst().get("id"),owner,false);}
         String resolved=null;
-        if(orderId!=null&&!orderId.isBlank()){var order=orders.owned(owner,orderId);orders.eligible(order,kind);resolved=(String)order.get("id");}
+        if(orderId!=null&&!orderId.isBlank()){var order=orders.owned(owner,orderId);orders.eligible(order,kind);resolved=order.id();}
         else if(!"QUESTION".equals(kind))throw new ApiException(400,"售后申请必须关联本人订单");
         String id=Store.id(),now=Store.now(),number="TK-"+UUID.randomUUID().toString().substring(0,8).toUpperCase();
         s.db.update("INSERT INTO tickets(id,ticket_no,owner_id,order_id,kind,subject,description,status,request_key,request_hash,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",id,number,owner,resolved,kind,subject,description,"OPEN",requestKey,hash,now,now);
@@ -51,7 +51,7 @@ public class TicketService {
     }
     @Transactional public Map<String,Object> propose(String owner,String orderId,String kind,String subject,String description){
         if(!KINDS.contains(kind))kind="QUESTION";
-        String resolved=null;if(orderId!=null&&!orderId.isBlank()){var order=orders.owned(owner,orderId);orders.eligible(order,kind);resolved=(String)order.get("id");}
+        String resolved=null;if(orderId!=null&&!orderId.isBlank()){var order=orders.owned(owner,orderId);orders.eligible(order,kind);resolved=order.id();}
         else if(!"QUESTION".equals(kind))throw new ApiException(400,"请提供本人订单号以生成售后草稿");
         String id=Store.id();s.db.update("INSERT INTO proposals VALUES(?,?,?,?,?,?,?,?,?)",id,owner,resolved,kind,subject,description,Instant.now().plus(15,ChronoUnit.MINUTES).toString(),null,Store.now());
         return s.one("SELECT * FROM proposals WHERE id=?",id);

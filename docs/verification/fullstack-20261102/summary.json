@@ -1,0 +1,349 @@
+{
+  "date": "2026-11-02",
+  "scope": "Local isolated demo deployments, fictional users/data; no production or target-server acceptance.",
+  "baseline": "d11bbf79d26f191c1575c3809c4d08ecf85ce162",
+  "java": {
+    "H2": {
+      "discovered": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "passed": 85
+    },
+    "PostgreSQL_with_real_Redis_and_RabbitMQ": {
+      "discovered": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 88
+    },
+    "MySQL": {
+      "discovered": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "passed": 85
+    },
+    "note": "Same 85 base cases on three databases; 3 extra middleware cases only enabled in the PostgreSQL run. AI mocked in JUnit."
+  },
+  "frontend": {
+    "unit_passed": 13,
+    "production_build": "passed",
+    "playwright_passed": 14,
+    "layouts": [
+      "Chromium desktop 1440x1000",
+      "Chromium mobile 390x844"
+    ],
+    "AI": "disabled in browser tests"
+  },
+  "http_PostgreSQL": {
+    "timestamp": "2026-11-02T09:05:50.368Z",
+    "baseUrl": "http://127.0.0.1:19084",
+    "tests": 19,
+    "passed": 19,
+    "results": [
+      {
+        "name": "unauthenticated orders rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login without CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login rotates session",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "own orders only",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign order hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot read admin audit",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "agent cannot manage knowledge",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "untrusted origin rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "trusted origin accepted",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "bad CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent creation is idempotent",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "same key different body rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign ticket hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent stale version rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot advance work status",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign conversation hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "SSE phases and result delivered",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "logout succeeds",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "session invalid after logout",
+        "pass": true,
+        "detail": ""
+      }
+    ]
+  },
+  "http_MySQL": {
+    "timestamp": "2026-11-02T09:08:58.583Z",
+    "baseUrl": "http://127.0.0.1:19083",
+    "tests": 19,
+    "passed": 19,
+    "results": [
+      {
+        "name": "unauthenticated orders rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login without CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login rotates session",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "own orders only",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign order hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot read admin audit",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "agent cannot manage knowledge",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "untrusted origin rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "trusted origin accepted",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "bad CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent creation is idempotent",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "same key different body rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign ticket hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent stale version rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot advance work status",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign conversation hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "SSE phases and result delivered",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "logout succeeds",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "session invalid after logout",
+        "pass": true,
+        "detail": ""
+      }
+    ]
+  },
+  "fullstack_real_services": {
+    "timestamp": "2026-11-02T09:07:29.462Z",
+    "baseUrl": "http://127.0.0.1:19084",
+    "tests": 14,
+    "passed": 14,
+    "indexJob": {
+      "id": "f69de4a6-38c3-4de7-a35a-2604cc3b0a35",
+      "documentId": "doc-earbuds",
+      "state": "SUCCEEDED",
+      "attempts": 1,
+      "indexed": 2,
+      "total": 2,
+      "error": null,
+      "createdAt": "2026-11-02T09:07:24.446006738Z",
+      "updatedAt": "2026-11-02T09:07:27.009580812Z"
+    },
+    "results": [
+      {
+        "name": "typed order page reports exact total",
+        "pass": true
+      },
+      {
+        "name": "second page is distinct",
+        "pass": true
+      },
+      {
+        "name": "paged orders retain owner isolation",
+        "pass": true
+      },
+      {
+        "name": "customer cannot submit index job",
+        "pass": true
+      },
+      {
+        "name": "product cache path serves new product",
+        "pass": true
+      },
+      {
+        "name": "product update switches cache generation",
+        "pass": true
+      },
+      {
+        "name": "deactivated product disappears immediately",
+        "pass": true
+      },
+      {
+        "name": "async indexing accepts durable job",
+        "pass": true
+      },
+      {
+        "name": "index submission idempotency",
+        "pass": true
+      },
+      {
+        "name": "real worker completes real model embeddings",
+        "pass": true
+      },
+      {
+        "name": "completed index job cannot be retried",
+        "pass": true
+      },
+      {
+        "name": "customer paged tickets remain private",
+        "pass": true
+      },
+      {
+        "name": "CSV download is available",
+        "pass": true
+      },
+      {
+        "name": "public frontend does not expose metrics",
+        "pass": true
+      }
+    ]
+  },
+  "real_model": {
+    "timestamp": "2026-11-02T09:07:45.525Z",
+    "baseUrl": "http://127.0.0.1:19084",
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "tests": 13,
+    "passed": 13,
+    "failed": [],
+    "scope": "Local real-model calls on fictional seed data. Assertions are bounded checks, not a general accuracy benchmark."
+  },
+  "monitoring": {
+    "Prometheus_target": "up",
+    "management_port_publicly_mapped": false,
+    "notification_delivery_configured": false
+  },
+  "learning_labs": {
+    "FullstackBasics": "passed",
+    "ConcurrencyLab": "passed",
+    "PostgreSQL_temporary_table_EXPLAIN": "passed",
+    "MySQL_temporary_table_EXPLAIN": "passed"
+  },
+  "corrected_acceptance_assertion": "Initial new HTTP script incorrectly expected owner_id in the ticket list projection. Replaced with two-customer create/filter/detail isolation verification; final 14/14 passed. No authorization bypass was found.",
+  "boundaries": [
+    "No public HTTPS or target-server verification",
+    "No production load benchmark",
+    "MySQL backup/restore not implemented",
+    "No shared sessions or distributed AI rate limiter",
+    "No microservices migration",
+    "No general model accuracy claim"
+  ]
+}

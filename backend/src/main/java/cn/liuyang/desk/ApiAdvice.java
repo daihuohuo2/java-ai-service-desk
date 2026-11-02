@@ -13,7 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class ApiAdvice {
     @ExceptionHandler(ApiException.class)
     ResponseEntity<?> api(ApiException e) { return ResponseEntity.status(e.status).body(Map.of("error",e.getMessage())); }
-    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IllegalArgumentException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IllegalArgumentException.class, org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class})
     ResponseEntity<?> invalid(Exception e) { return ResponseEntity.badRequest().body(Map.of("error","输入格式不正确，请检查必填项和长度")); }
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     ResponseEntity<?> large(Exception e) { return ResponseEntity.status(413).body(Map.of("error","文件不能超过 256 KB")); }

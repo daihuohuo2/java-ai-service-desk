@@ -1,0 +1,12 @@
+management:
+  server:
+    port: 9090
+    address: ${MANAGEMENT_BIND_ADDRESS:127.0.0.1}
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true

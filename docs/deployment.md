@@ -1,5 +1,16 @@
 # 部署与迁移手册
 
+## 2026-11-02 可选全栈组件
+
+默认 PostgreSQL/H2 路径仍可运行。Redis、RabbitMQ、独立 MySQL 与 Prometheus 的组合命令见 [扩展说明](fullstack-upgrade.md)，测试环境见 [实验运行说明](learning/实验运行说明.md)。
+
+- Redis 商品缓存与 RabbitMQ 索引队列：`compose.middleware.yaml`，部署模式不映射宿主服务端口。
+- 独立 MySQL：`compose.mysql.yaml`，默认网页端口 19083，独立数据卷；不会迁移或覆盖 PostgreSQL 数据。下方备份/恢复脚本仅适用于 PostgreSQL。
+- Prometheus：`compose.observability.yaml`，本机 19090；管理 HTTP 9090 仅在容器网络开放，Nginx 只代理健康检查。不要直接把管理端口暴露到公网。规则见 `deploy/alerts.yml`，尚未配置外发告警。
+- Linux HTTPS 模板：`deploy/nginx.https.example.conf`，需替换域名和证书，设置 APP_ORIGIN、COOKIE_SECURE。模板不代表已完成真实公网 TLS 验收。
+- 故障观察：`scripts/diagnose.ps1` 只读端口与 Java 诊断，不停止服务。数据库迁移前备份、先用新库验证，避免把测试指向业务数据库。
+
+
 ## 1. 环境
 
 源码构建：JDK 21、Node.js 24、npm、Docker Engine/Desktop 与 Compose v2。容器运行 JRE 使用 Eclipse Temurin；源码无需付费 JDK。Maven Wrapper 与 npm lockfile固定构建依赖。首次构建/部署需联网下载依赖、镜像和模型。

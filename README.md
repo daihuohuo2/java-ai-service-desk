@@ -26,11 +26,12 @@ Java + Spring AI customer service desk with local Ollama models, grounded knowle
 
 ## 技术实现
 
-刚学 Java？先看 [从 Java 基础读懂项目](docs/learning/从Java基础读懂项目.md)，配套 `learning/OrderLesson.java` 可直接运行。
+刚学 Java？从 [全栈学习路线](docs/learning/全栈学习路线.md) 开始，按 [文件阅读顺序](docs/learning/文件阅读顺序.md) 阅读。先运行 `learning/FullstackBasics.java`，再跟踪 `OrderController → OrderService → OrderMapper → SQL`，最后进入 AI。
 
-- Java 21 / Spring Boot 4.1.2 / Spring AI 2.0.2 / Spring Security / JDBC / Flyway。
-- React 19 / TypeScript / Vite，自适应客户工作台与管理工作台。
-- PostgreSQL 17 用于容器部署；H2 用于无需容器的开发与测试。
+- Java 21 / Spring Boot 4.1.2 / Spring AI 2.0.2 / Spring Security / MyBatis + JDBC / Flyway。
+- React 19 / TypeScript / Vite / React Router：分页面、登录上下文、表单校验、服务端分页筛选、CSV 导出及手机布局。
+- PostgreSQL 17 默认容器部署；H2 轻量开发与测试；MySQL 8.4 独立配置与迁移脚本。
+- 可选 Redis 商品缓存；SQL 持久化的知识索引任务、RabbitMQ 消费、租约与重试；Micrometer + Prometheus 监控配置。
 - Ollama + Qwen3 4B Instruct + Qwen3 Embedding 0.6B，本地推理，不要求付费闭源 SDK 或云 API Key。
 - 中文二元字符检索与向量余弦相似度混合排序；商品范围过滤，模型选择资料 ID，后端逐一校验引用并输出原文。
 - Cookie 会话、CSRF、角色权限、订单/会话归属检查；工单行锁、版本号与幂等键；AI 草稿二次确认；错误与超时降级。
@@ -64,11 +65,23 @@ npm.cmd test --prefix frontend
 npm.cmd run build --prefix frontend
 ```
 
-GitHub Actions 另外使用独立 PostgreSQL 测试库执行后端测试。CI 中模型为 Mock；真实模型验收使用 [验收脚本](scripts/live-acceptance.mjs) 在部署后的演示环境中运行。
+GitHub Actions 同时验证 PostgreSQL、MySQL、真实 Redis/RabbitMQ、Java 学习实验和 Chromium 桌面/手机浏览器流程。CI 中模型为 Mock 或关闭；真实模型验收使用 [验收脚本](scripts/live-acceptance.mjs) 在部署后的演示环境中运行。
+
+### 全栈扩展的可选启动方式
+
+```powershell
+.\scripts\start.ps1 -Middleware -Observability
+# 或使用独立 MySQL 数据卷（不自动迁移现有 PostgreSQL 数据）
+.\scripts\start.ps1 -MySql -Middleware
+# 自动启动独立数据库/中间件测试环境并验证
+.\scripts\run-integration.ps1
+```
+
+`-Middleware` 启用 Redis 和 RabbitMQ；不加时仍可使用默认数据库任务调度器。已有模型可复用 `OLLAMA_URL`，没有模型服务则增加 `-ManagedModels`。监控入口仅绑定本机 `19090`。完整说明见 [全栈扩展交付说明](docs/fullstack-upgrade.md) 与 [实验运行说明](docs/learning/实验运行说明.md)。
 
 ## 文档与验收证据
 
-2026-10-31 升级版已通过：49 项 Java 测试分别在 H2 与 PostgreSQL 执行、9 项前端测试与生产构建、19 项 HTTP 验收、12 个模型场景行为检查及工单闭环。最终模型轮次含 1 次安全降级。VS Code 显示 0 错误、0 警告，原本机服务已更新。变更、备份与边界见 [升级验收报告](docs/upgrades/20261031-spring-boot-4.md)。2026-10-30 的 ZIP 解压部署验收属于旧版本历史证据。
+2026-11-02 全栈扩展的功能、复现方式和验收范围见 [交付说明](docs/fullstack-upgrade.md) 与 [本次验收摘要](docs/verification/fullstack-20261102/summary.json)。2026-10-31 的 [Spring Boot 升级报告](docs/upgrades/20261031-spring-boot-4.md) 和 2026-10-30 ZIP 验收属于历史记录。
 
 历史本机交付 ZIP、数据库、模型、环境配置和机器诊断日志未上传。公开的验收摘要与虚构场景记录见 [证据说明](docs/verification/README.md)。
 

@@ -12,7 +12,29 @@ flowchart LR
   V --> U
 ```
 
-Java 业务层采用显式 JDBC 与参数化 SQL，重要写操作使用 Spring 事务。数据库结构由 `backend/src/main/resources/db/migration/V1__initial.sql` 维护。服务默认单实例，内存会话及模型并发限流没有分布式共享；扩展副本前需迁移会话、分布式任务锁与限流。
+订单通过 MyBatis 映射到类型化 record，其他业务使用 JDBC 与参数化 SQL，重要写操作使用 Spring 事务。Flyway V1/V2 维护结构；MySQL 使用独立 `db/migration-mysql` 路径并显式建立外键。服务仍默认单实例，内存会话及模型并发限流没有分布式共享，任务的 SQL 抢占不能替代其他状态的多实例改造。
+
+## 全栈扩展数据流
+
+```mermaid
+flowchart LR
+  P[React 页面 / Router] --> C[订单与工单 Controller]
+  C --> S[Service 校验 / 分页]
+  S --> M[MyBatis / JDBC]
+  M --> D[(PostgreSQL / H2 / MySQL)]
+  PS[ProductService] --> R[Redis 可选]
+  PS --> D
+  K[管理员提交索引] --> J[(index_jobs 持久任务)]
+  J --> Q[定时调度器]
+  Q --> MQ[RabbitMQ 可选]
+  MQ --> W[SQL 抢占与租约消费者]
+  Q --> W
+  W --> AI[KnowledgeService / EmbeddingModel]
+```
+
+商品写入与 `catalog_revision` 同事务提交；读取版本后查询对应 Redis 键，失败回源，旧键 TTL 30 秒。事务内绕过共享缓存。
+
+`index_jobs` 同时充当持久任务和待投递记录。调度器发布任务 ID，消费者用 SQL 条件更新抢占；每次生成新 token，只有持有当前 token 才可心跳和提交最终状态。崩溃后租约过期可恢复；消息允许重复，嵌入写入幂等。更多限制见 [扩展说明](fullstack-upgrade.md)。
 
 ## 表与关系
 
@@ -26,6 +48,8 @@ Java 业务层采用显式 JDBC 与参数化 SQL，重要写操作使用 Spring 
 | chat_runs | 幂等键、请求原文、运行状态、模式、耗时、结果 |
 | proposals | 待确认草稿、到期时间及最终工单关联 |
 | audit_log | 操作者、行为、资源和业务摘要 |
+| catalog_revision | 商品缓存版本，与商品写入同事务变更 |
+| index_jobs | 幂等请求、状态、次数、租约 token、延迟重试和结果 |
 
 引用快照随回答保存，即使后续停用文档，历史消息仍可解释当时的依据。新增知识创建新文档；当前版本不支持在线编辑原文，旧资料应停用后上传新版本。
 

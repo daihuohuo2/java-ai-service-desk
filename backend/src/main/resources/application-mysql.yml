@@ -1,0 +1,5 @@
+spring:
+  flyway:
+    locations: classpath:db/migration-mysql
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://127.0.0.1:23306/desk_tests?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8}

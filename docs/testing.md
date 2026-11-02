@@ -2,7 +2,9 @@
 
 ## 开源仓库自动测试
 
-[GitHub Actions](https://github.com/daihuohuo2/java-ai-service-desk/actions/workflows/ci.yml) 在推送和 Pull Request 时运行 Java 21 后端测试（H2 与独立 PostgreSQL 17）、9 项前端测试及生产构建。CI 使用 Mock 模型，不替代真实 Ollama、GPU、浏览器或服务器验收。具体状态以对应提交的 Actions 结果为准。
+[GitHub Actions](https://github.com/daihuohuo2/java-ai-service-desk/actions/workflows/ci.yml) 验证 H2、PostgreSQL 17、MySQL 8.4、真实 Redis/RabbitMQ、13 项前端测试、生产构建、14 项 Chromium 桌面/手机流程，以及 Java 学习实验。后端共 88 项：85 项基础用例分别运行于三个数据库，3 项中间件用例仅在显式启用真实中间件的 PostgreSQL 阶段运行。CI 的 AI 为 Mock 或关闭，不替代真实模型、生产负载与指定服务器验收。具体状态以对应提交的 Actions 结果为准。
+
+2026-11-02 本机结果见 [本次摘要](verification/fullstack-20261102/summary.json)。复现命令见 [实验运行说明](learning/实验运行说明.md)。`compose.test-services.yaml` 使用独立测试库、用户和端口；测试不能指向业务数据库。
 
 下文是带日期的历史本机验收。公开仓库保留摘要和虚构业务场景；机器日志、绝对路径清单和桌面截图仅在本机留存，详见 [证据说明](verification/README.md)。
 

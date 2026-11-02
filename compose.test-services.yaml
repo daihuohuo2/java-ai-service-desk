@@ -1,0 +1,46 @@
+name: desk-fullstack-tests
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_USER: desk_test
+      POSTGRES_PASSWORD: test-only-password
+      POSTGRES_DB: desk_tests
+    ports: ["127.0.0.1:25432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U desk_test -d desk_tests"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: test-only-root
+      MYSQL_USER: desk_test
+      MYSQL_PASSWORD: test-only-password
+      MYSQL_DATABASE: desk_tests
+    ports: ["127.0.0.1:23306:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+  redis:
+    image: redis:8.2-alpine
+    ports: ["127.0.0.1:26379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: desk_test
+      RABBITMQ_DEFAULT_PASS: test-only-password
+    ports: ["127.0.0.1:25672:5672"]
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 40

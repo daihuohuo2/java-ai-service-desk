@@ -1,0 +1,34 @@
+name: java-ai-service-desk-mysql
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: desk
+      MYSQL_USER: desk
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:?Run scripts/init-env.ps1}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-${DATABASE_PASSWORD}}
+    volumes: [desk-mysql:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    restart: unless-stopped
+  api:
+    extends:
+      file: compose.yaml
+      service: api
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      APP_ORIGIN: ${MYSQL_APP_ORIGIN:-http://127.0.0.1:19083,http://localhost:19083}
+      DATABASE_URL: jdbc:mysql://db:3306/desk?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+  web:
+    build: ./frontend
+    image: java-ai-service-desk-web:1.0.0
+    ports: ["${BIND_HOST:-127.0.0.1}:${MYSQL_WEB_PORT:-19083}:80"]
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  desk-mysql:

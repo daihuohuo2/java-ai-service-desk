@@ -1,5 +1,8 @@
 # 第三方依赖与素材
 
+本次全栈扩展新增 MyBatis / MyBatis Spring Boot Starter、Spring Data Redis、Spring AMQP、MySQL Connector/J、Flyway MySQL、Micrometer Prometheus、React Router、Playwright 和 Prettier；可选容器包括 MySQL 8.4、Redis 8.2、RabbitMQ 4.1、Prometheus 3.5。它们各自的 LICENSE/NOTICE 和镜像条款继续适用，项目 MIT 不重新许可这些依赖。容器、模型及 npm/Maven 依赖不会提交到 GitHub 源码仓库；交付 JAR 包含运行依赖，分发时应保留相应声明。实际版本以 pom、锁文件和 Compose 为准。
+
+
 本项目业务代码和界面在本次任务中创建，演示商品、政策、订单和姓名均为虚构，没有复制真实客户资料。图标使用 lucide-react，无外链字体、商业图片素材或闭源付费 SDK。
 
 主要直接依赖：Spring Boot/Security/AI、Apache Maven、Flyway、JUnit（各自开源许可证）；PostgreSQL（PostgreSQL License）；H2（MPL 2.0 / EPL 1.0 双许可）；React、Vite、TypeScript、Ollama（各项目许可证）；Lucide（ISC）。实际发布再分发应保留所用依赖的许可证及通知文件，不能把本表当成完整的法律审核。

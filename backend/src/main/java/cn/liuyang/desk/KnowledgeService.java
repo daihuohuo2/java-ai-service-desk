@@ -27,8 +27,11 @@ public class KnowledgeService {
         s.db.update("UPDATE knowledge_documents SET active=? WHERE id=?",active,id);s.audit(actor,"KNOWLEDGE_STATE",id,active?"启用资料":"停用资料");return Map.of("active",active);
     }
     public Map<String,Object> index(String id,String actor){
+        return index(id,actor,()->{});
+    }
+    public Map<String,Object> index(String id,String actor,Runnable heartbeat){
         var rows=id==null?s.db.queryForList("SELECT c.* FROM knowledge_chunks c JOIN knowledge_documents d ON c.document_id=d.id WHERE d.active=true AND c.embedding IS NULL ORDER BY d.id,c.ordinal"):s.db.queryForList("SELECT c.* FROM knowledge_chunks c JOIN knowledge_documents d ON c.document_id=d.id WHERE d.id=? AND d.active=true ORDER BY c.ordinal",id);
-        int indexed=0;for(var row:rows){float[] vector=ai.embed((String)row.get("content"));if(vector==null)break;s.db.update("UPDATE knowledge_chunks SET embedding=?,embedding_model=? WHERE id=?",s.encode(vector),ai.embeddingName(),row.get("id"));indexed++;}
+        int indexed=0;for(var row:rows){heartbeat.run();float[] vector=ai.embed((String)row.get("content"));if(vector==null)break;heartbeat.run();s.db.update("UPDATE knowledge_chunks SET embedding=?,embedding_model=? WHERE id=?",s.encode(vector),ai.embeddingName(),row.get("id"));indexed++;}
         s.audit(actor,"KNOWLEDGE_INDEX",id,"向量化 "+indexed+" / "+rows.size()+" 个片段");return Map.of("indexed",indexed,"total",rows.size(),"complete",indexed==rows.size());
     }
     public List<Map<String,Object>> search(String question){

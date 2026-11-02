@@ -5,14 +5,21 @@ from hashlib import sha256
 import json
 import argparse
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--name',default='java-ai-service-desk-1.0.0-delivery.zip')
+parser.add_argument('--name',default='java-ai-service-desk-fullstack-20261102.zip')
 args=parser.parse_args()
 if Path(args.name).name!=args.name or not args.name.endswith('.zip'):
     parser.error('--name must be a ZIP filename without directory components')
 root=Path(__file__).resolve().parents[1]
 files=[]
-for directory in ('backend/src','backend/.mvn','frontend/src','frontend/public','frontend/tests','frontend/dist','scripts','docs','learning','.vscode'):
-    files.extend(p for p in (root/directory).rglob('*') if p.is_file())
+excluded={'docs/verification/containers.json','docs/verification/start-script.txt',
+          'docs/verification/boot-upgrade-20261031/jar-sha256.json',
+          'docs/verification/boot-upgrade-20261031/vscode-zero-problems.png'}
+for directory in ('backend/src','backend/.mvn','frontend/src','frontend/public','frontend/tests','frontend/e2e','frontend/dist','scripts','docs','learning','deploy','.github','.vscode'):
+    files.extend(p for p in (root/directory).rglob('*') if p.is_file()
+                 and '__pycache__' not in p.parts and p.suffix not in ('.log','.pyc','.tmp')
+                 and p.relative_to(root).as_posix() not in excluded)
+files.extend(root.glob('compose*.yaml'))
+files.extend(root/name for name in ('frontend/playwright.config.ts','backend/.dockerignore','frontend/.dockerignore'))
 for name in ('README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY.md','.gitattributes','.gitignore','.env.example','compose.yaml','compose.models.yaml','compose.gpu.yaml','backend/pom.xml','backend/mvnw','backend/mvnw.cmd','backend/Dockerfile','backend/target/service-desk-1.0.0.jar','frontend/package.json','frontend/package-lock.json','frontend/index.html','frontend/tsconfig.json','frontend/vite.config.ts','frontend/Dockerfile','frontend/nginx.conf'):
     path=root/name
     if not path.is_file():raise SystemExit('Missing required delivery file: '+name)
@@ -21,6 +28,7 @@ files=sorted(set(files))
 manifest={p.relative_to(root).as_posix():sha256(p.read_bytes()).hexdigest() for p in files}
 out=root/'dist';out.mkdir(exist_ok=True)
 archive=out/args.name
+if archive.exists():raise SystemExit('Archive already exists; choose a new --name to preserve the earlier delivery.')
 prefix='java-ai-service-desk/'
 with ZipFile(archive,'w',ZIP_DEFLATED) as z:
     for path in files:z.write(path,prefix+path.relative_to(root).as_posix())
