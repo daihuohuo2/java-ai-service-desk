@@ -324,6 +324,9 @@
     "tests": 13,
     "passed": 13,
     "failed": [],
+    "question_mode_counts": {"OLLAMA": 11, "MODEL_UNAVAILABLE": 1},
+    "safe_fallback_cases": ["unknown-product: correctly returned insufficient information without inventing product specifications"],
+    "test_count_note": "12 question scenarios plus 1 ticket lifecycle; one question passed its safe-fallback behavior check, not a successful model-planning check.",
     "scope": "Local real-model calls on fictional seed data. Assertions are bounded checks, not a general accuracy benchmark."
   },
   "monitoring": {
