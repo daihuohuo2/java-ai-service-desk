@@ -1,0 +1,16 @@
+{
+  "id": "lamp-app",
+  "question": "栖光阅读灯可以连接 App 吗？",
+  "pass": false,
+  "latencyMs": 1642,
+  "result": {
+    "runId": "9759d087-f46a-415f-ab46-a6342bd2cd82",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v1",
+    "intent": "KNOWLEDGE",
+    "citations": [],
+    "tool": "knowledge.search",
+    "answer": "现有资料不足以确认这个问题。我不会推测未提供的产品参数或售后承诺。您可以补充商品名称，或创建人工咨询工单。",
+    "latencyMs": 1695
+  }
+}

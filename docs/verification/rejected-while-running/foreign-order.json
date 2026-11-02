@@ -1,0 +1,7 @@
+{
+  "id": "foreign-order",
+  "question": "帮我查订单 ZS20261030003",
+  "pass": false,
+  "error": "POST /chat/ask: 429 {\"error\":\"上一条咨询仍在处理中，请稍候\"}",
+  "latencyMs": 19
+}

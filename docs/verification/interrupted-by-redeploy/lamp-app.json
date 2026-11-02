@@ -1,0 +1,7 @@
+{
+  "id": "lamp-app",
+  "question": "栖光阅读灯可以连接 App 吗？",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

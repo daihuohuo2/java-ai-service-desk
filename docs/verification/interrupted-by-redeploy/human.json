@@ -1,0 +1,7 @@
+{
+  "id": "human",
+  "question": "我需要人工客服帮助，请帮我创建咨询草稿",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

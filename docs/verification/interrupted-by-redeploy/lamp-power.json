@@ -1,0 +1,7 @@
+{
+  "id": "lamp-power",
+  "question": "栖光阅读灯需要充电吗？",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 22202
+}

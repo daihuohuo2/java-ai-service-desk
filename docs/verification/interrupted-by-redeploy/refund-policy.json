@@ -1,0 +1,7 @@
+{
+  "id": "refund-policy",
+  "question": "签收后可以退货吗？需要满足哪些条件？",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

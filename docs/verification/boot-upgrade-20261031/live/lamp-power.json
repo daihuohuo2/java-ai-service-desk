@@ -1,0 +1,16 @@
+{
+  "id": "lamp-power",
+  "question": "栖光阅读灯需要充电吗？",
+  "pass": false,
+  "latencyMs": 1748,
+  "result": {
+    "runId": "98ec3591-e617-4ef7-949f-f1a81270467c",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v1",
+    "intent": "KNOWLEDGE",
+    "citations": [],
+    "tool": "knowledge.search",
+    "answer": "现有资料不足以确认这个问题。我不会推测未提供的产品参数或售后承诺。您可以补充商品名称，或创建人工咨询工单。",
+    "latencyMs": 1727
+  }
+}

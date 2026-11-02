@@ -1,0 +1,26 @@
+{
+  "id": "warranty",
+  "question": "栖光阅读灯保修多久？进水可以免费修吗？",
+  "pass": true,
+  "latencyMs": 956,
+  "result": {
+    "runId": "341bda49-add5-4939-ae0a-630f0a06b53f",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v2-short-refs",
+    "intent": "KNOWLEDGE",
+    "citations": [
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.994,
+        "retrieval": "hybrid"
+      }
+    ],
+    "tool": "knowledge.search",
+    "answer": "根据目前已发布的资料：\n\n[1] 栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+    "latencyMs": 973
+  }
+}

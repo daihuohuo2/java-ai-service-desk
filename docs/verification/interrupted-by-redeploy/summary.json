@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-10-30T11:52:14.917Z",
+  "baseUrl": "http://127.0.0.1:19082",
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "tests": 12,
+  "passed": 0,
+  "failed": [
+    "lamp-power",
+    "lamp-app",
+    "refund-policy",
+    "warranty",
+    "unknown-spec",
+    "unknown-product",
+    "own-order",
+    "foreign-order",
+    "refund-draft",
+    "policy-not-action",
+    "injection",
+    "human"
+  ],
+  "scope": "Local real-model calls on fictional seed data. Assertions are bounded checks, not a general accuracy benchmark."
+}

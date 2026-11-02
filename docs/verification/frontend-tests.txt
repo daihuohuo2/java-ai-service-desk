@@ -1,0 +1,21 @@
+
+> zhixu-service-desk@1.0.0 test
+> node --test tests/*.test.mjs
+
+✔ mutations carry CSRF and same-origin session credentials (24.4942ms)
+✔ expired session error reaches the UI (1.0247ms)
+✔ non-JSON upstream errors are readable (0.6439ms)
+✔ logout 204 succeeds without parsing JSON (0.2431ms)
+✔ multipart uploads keep browser generated content type (0.7333ms)
+✔ SSE parses split UTF-8 and CRLF bytes (3.344ms)
+✔ SSE business errors are surfaced (0.4649ms)
+✔ SSE disconnected before final answer is not marked successful (0.6074ms)
+✔ SSE HTTP denial is surfaced before reading stream (0.477ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.8533

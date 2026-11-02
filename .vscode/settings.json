@@ -1,0 +1,30 @@
+{
+    "java.import.exclusions": [
+        "**/node_modules/**",
+        "**/.metadata/**",
+        "**/archetype-resources/**",
+        "**/META-INF/maven/**",
+        "**/.runtime/**",
+        "**/.tools/**",
+        "**/dist/**"
+    ],
+    "java.project.resourceFilters": [
+        "node_modules",
+        "\\.git",
+        "\\.runtime",
+        "\\.tools"
+    ],
+    "files.exclude": {
+        "**/.runtime": true,
+        "**/.tools": true
+    },
+    "search.exclude": {
+        "**/.runtime/**": true,
+        "**/.tools/**": true
+    },
+    "explorer.compactFolders": false,
+    "[java]": {
+        "editor.wordWrap": "on",
+        "editor.defaultFormatter": "redhat.java"
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "refund-draft",
+  "question": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

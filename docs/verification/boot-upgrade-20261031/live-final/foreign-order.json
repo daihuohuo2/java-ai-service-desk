@@ -1,0 +1,15 @@
+{
+  "id": "foreign-order",
+  "question": "帮我查订单 ZS20261030003",
+  "pass": true,
+  "latencyMs": 1257,
+  "result": {
+    "runId": "4b192563-d69a-4b66-bff2-8c681b48b8de",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v2-short-refs",
+    "intent": "ORDER",
+    "citations": [],
+    "answer": "未查询到您本人的对应订单，请核对订单号。您也可以在“我的订单”中选择订单。",
+    "latencyMs": 1292
+  }
+}

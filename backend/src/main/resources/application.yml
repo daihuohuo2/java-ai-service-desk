@@ -1,0 +1,63 @@
+server:
+  port: ${PORT:19080}
+  address: ${BIND_ADDRESS:127.0.0.1}
+  error:
+    include-message: never
+  servlet:
+    session:
+      timeout: 60m
+      cookie:
+        name: DESK_SESSION
+        http-only: true
+        secure: ${COOKIE_SECURE:false}
+        same-site: strict
+spring:
+  application:
+    name: java-ai-service-desk
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./.runtime/desk;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+    hikari:
+      maximum-pool-size: 8
+  servlet:
+    multipart:
+      max-file-size: 256KB
+      max-request-size: 300KB
+  mvc:
+    async:
+      request-timeout: 150000
+  ai:
+    retry:
+      max-attempts: 1
+    ollama:
+      base-url: ${OLLAMA_URL:http://127.0.0.1:28434}
+      init:
+        pull-model-strategy: never
+      chat:
+        model: ${CHAT_MODEL:qwen3:4b-instruct-2507-q4_K_M}
+        temperature: 0.0
+        num-ctx: 4096
+        num-predict: 256
+        format: json
+        keep-alive: ${MODEL_KEEP_ALIVE:5m}
+      embedding:
+        model: ${EMBED_MODEL:qwen3-embedding:0.6b}
+        keep-alive: ${MODEL_KEEP_ALIVE:5m}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+desk:
+  demo: ${APP_DEMO:true}
+  admin-password: ${ADMIN_PASSWORD:DemoAdmin!2026}
+  customer-password: ${CUSTOMER_PASSWORD:DemoCustomer!2026}
+  agent-password: ${AGENT_PASSWORD:DemoAgent!2026}
+  ai-enabled: ${AI_ENABLED:true}
+  model-timeout-seconds: ${MODEL_TIMEOUT_SECONDS:90}
+  allowed-origin: ${APP_ORIGIN:http://127.0.0.1:19081,http://localhost:19081,http://127.0.0.1:19082,http://localhost:19082}
+  deployment-mode: ${DEPLOYMENT_MODE:local}

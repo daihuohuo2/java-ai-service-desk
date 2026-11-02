@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30",
+  "method": "Manual browser acceptance through CUA, fictional local demo data",
+  "checks": [
+    {"name":"customer role login", "pass":true},
+    {"name":"own order cards and order-linked ticket form", "pass":true},
+    {"name":"manual ticket submission and success notification", "pass":true},
+    {"name":"administrator overview, knowledge index counts and product list", "pass":true},
+    {"name":"390 x 844 responsive knowledge cards and navigation menu", "pass":true},
+    {"name":"full product name chat prompt and expandable source citation", "pass":true},
+    {"name":"short product name query", "pass":false, "note":"Conservative insufficient-information answer observed; full product name works. Documented retrieval/planning limitation."}
+  ],
+  "screenshots": ["customer-tickets.png","knowledge.png","mobile-knowledge.png","chat-grounded.png"]
+}

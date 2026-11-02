@@ -1,0 +1,7 @@
+{
+  "id": "foreign-order",
+  "question": "帮我查订单 ZS20261030003",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 3
+}

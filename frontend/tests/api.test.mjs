@@ -1,0 +1,15 @@
+import {test,afterEach} from 'node:test';
+import assert from 'node:assert/strict';
+import {api,refreshCsrf,askStream} from '../src/api.ts';
+const original=globalThis.fetch;afterEach(()=>globalThis.fetch=original);
+const json=(obj,status=200)=>new Response(JSON.stringify(obj),{status,headers:{'Content-Type':'application/json'}});
+const stream=(text,size=1)=>new Response(new ReadableStream({start(c){const b=new TextEncoder().encode(text);for(let i=0;i<b.length;i+=size)c.enqueue(b.slice(i,i+size));c.close();}}),{headers:{'Content-Type':'text/event-stream'}});
+test('mutations carry CSRF and same-origin session credentials',async()=>{let seen;globalThis.fetch=async(url,opts)=>url.endsWith('/csrf')?json({token:'fresh-token'}):(seen=opts,json({id:1}));await refreshCsrf();assert.deepEqual(await api('/tickets',{method:'POST',body:'{}'}),{id:1});assert.equal(seen.headers['X-CSRF-TOKEN'],'fresh-token');assert.equal(seen.credentials,'include');});
+test('expired session error reaches the UI',async()=>{globalThis.fetch=async()=>json({error:'请先登录'},401);await assert.rejects(api('/orders'),/请先登录/);});
+test('non-JSON upstream errors are readable',async()=>{globalThis.fetch=async()=>new Response('<html>Bad Gateway</html>',{status:502});await assert.rejects(api('/orders'),/无法识别/);});
+test('logout 204 succeeds without parsing JSON',async()=>{globalThis.fetch=async()=>new Response(null,{status:204});assert.equal(await api('/auth/logout',{method:'POST'}),undefined);});
+test('multipart uploads keep browser generated content type',async()=>{let headers;globalThis.fetch=async(u,o)=>{headers=o.headers;return json({ok:true})};const form=new FormData();form.append('title','资料');await api('/knowledge/upload',{method:'POST',body:form});assert.equal(headers['Content-Type'],undefined);});
+test('SSE parses split UTF-8 and CRLF bytes',async()=>{const events=[];globalThis.fetch=async()=>stream('event:phase\r\ndata:{"message":"检索资料"}\r\n\r\nevent:result\r\ndata:{"answer":"有据可查","citations":[]}\r\n\r\nevent:done\r\ndata:{"ok":true}\r\n\r\n');const r=await askStream('thread','问题',x=>events.push(x),'request-key');assert.equal(r.answer,'有据可查');assert.deepEqual(events,['检索资料']);});
+test('SSE business errors are surfaced',async()=>{globalThis.fetch=async()=>stream('event:error\ndata:{"error":"上一条咨询仍在处理中"}\n\n',7);await assert.rejects(askStream('t','q',()=>{},'request-key'),/仍在处理中/);});
+test('SSE disconnected before final answer is not marked successful',async()=>{globalThis.fetch=async()=>stream('event:phase\ndata:{"message":"检索"}\n\n');await assert.rejects(askStream('t','q',()=>{},'request-key'),/连接已中断/);});
+test('SSE HTTP denial is surfaced before reading stream',async()=>{globalThis.fetch=async()=>json({error:'权限不足'},403);await assert.rejects(askStream('t','q',()=>{},'request-key'),/权限不足/);});

@@ -1,0 +1,7 @@
+{
+  "id": "own-order",
+  "question": "帮我查询订单 ZS20261030001",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 3
+}

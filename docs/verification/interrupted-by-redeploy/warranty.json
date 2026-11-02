@@ -1,0 +1,7 @@
+{
+  "id": "warranty",
+  "question": "栖光阅读灯保修多久？进水可以免费修吗？",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

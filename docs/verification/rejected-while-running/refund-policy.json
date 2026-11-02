@@ -1,0 +1,7 @@
+{
+  "id": "refund-policy",
+  "question": "签收后可以退货吗？需要满足哪些条件？",
+  "pass": false,
+  "error": "POST /chat/ask: 429 {\"error\":\"上一条咨询仍在处理中，请稍候\"}",
+  "latencyMs": 18
+}

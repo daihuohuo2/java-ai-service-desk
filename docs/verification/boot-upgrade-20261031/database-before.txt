@@ -1,0 +1,4 @@
+users|4
+tickets|6
+messages|60
+chunks|12

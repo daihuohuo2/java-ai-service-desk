@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="cn.liuyang.desk.AiGatewayTest" time="5.965" tests="5" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="shortReferencesResolveToOriginalIdsWithoutMutatingCandidates" classname="cn.liuyang.desk.AiGatewayTest" time="0.721">
+  </testcase>
+  <testcase name="malformedModelJsonFallsBackToReadOnlyBehavior" classname="cn.liuyang.desk.AiGatewayTest" time="0.019" />
+  <testcase name="rawDatabaseIdCannotBypassTheRequestReferenceTable" classname="cn.liuyang.desk.AiGatewayTest" time="0.011" />
+  <testcase name="unknownReferenceRejectsAllCitationsIncludingAnOtherwiseValidOne" classname="cn.liuyang.desk.AiGatewayTest" time="0.009" />
+  <testcase name="referencesCannotResolveAgainstCandidatesFromAnEarlierRequest" classname="cn.liuyang.desk.AiGatewayTest" time="0.012" />
+</testsuite>

@@ -1,0 +1,5 @@
+users=4
+tickets=6
+messages=52
+chunks=12
+PASS: isolated pg_restore completed, constraints restored and queries succeeded.

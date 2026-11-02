@@ -1,0 +1,14 @@
+{
+  "real_model_scenarios": 12,
+  "scenario_behavior_passed": 12,
+  "modes": {
+    "OLLAMA": 11,
+    "MODEL_UNAVAILABLE": 1
+  },
+  "latency_ms": {
+    "min": 1156,
+    "median": 1553.0,
+    "max": 8541
+  },
+  "scope": "Final local warm-model run, fictional seed data; not a benchmark."
+}

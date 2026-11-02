@@ -1,0 +1,26 @@
+{
+  "id": "unknown-spec",
+  "question": "云屿保温杯保证保温多少小时？",
+  "pass": true,
+  "latencyMs": 891,
+  "result": {
+    "runId": "d193b6d0-d29c-4485-88e2-7beee41a710c",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v2-short-refs",
+    "intent": "KNOWLEDGE",
+    "citations": [
+      {
+        "id": "30307088-2638-47f0-a378-dd525997a99a",
+        "title": "云屿保温杯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "杯盖可拆卸清洗，建议使用中性清洁剂。保温效果受环境温度、装水量和开盖频率影响，资料没有承诺固定保温小时数。",
+        "score": 0.828,
+        "retrieval": "hybrid"
+      }
+    ],
+    "tool": "knowledge.search",
+    "answer": "根据目前已发布的资料：\n\n[1] 杯盖可拆卸清洗，建议使用中性清洁剂。保温效果受环境温度、装水量和开盖频率影响，资料没有承诺固定保温小时数。",
+    "latencyMs": 901
+  }
+}

@@ -1,0 +1,230 @@
+[
+  {
+    "question": "栖光阅读灯需要充电吗？",
+    "keys": [
+      "question",
+      "history",
+      "candidates"
+    ],
+    "candidates": [
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 1.32,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 0.943,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.94,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"b1e0de8a-5c6a-4b51-a074-4323dc39e99c\"]}"
+  },
+  {
+    "question": "栖光阅读灯需要充电吗？",
+    "keys": [
+      "candidates",
+      "history",
+      "question"
+    ],
+    "candidates": [
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 1.32,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 0.943,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.94,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"b1e0de8a-5c6a-4b51-a074-4323dc39e99c\"]}"
+  },
+  {
+    "question": "栖光阅读灯需要充电吗？",
+    "keys": [
+      "history",
+      "question",
+      "candidates"
+    ],
+    "candidates": [
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 1.32,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 0.943,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.94,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"b1e0de8a-5c6a-4b51-a074-4323dc39e99c\"]}"
+  },
+  {
+    "question": "栖光阅读灯可以连接 App 吗？",
+    "keys": [
+      "question",
+      "history",
+      "candidates"
+    ],
+    "candidates": [
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 1.086,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 0.923,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.802,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"80349697-3f19-4856-97a7-38de372f400d\"]}"
+  },
+  {
+    "question": "栖光阅读灯可以连接 App 吗？",
+    "keys": [
+      "candidates",
+      "history",
+      "question"
+    ],
+    "candidates": [
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 1.086,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 0.923,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.802,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"8034969-3f19-4856-97a7-38de372f400d\"]}"
+  },
+  {
+    "question": "栖光阅读灯可以连接 App 吗？",
+    "keys": [
+      "history",
+      "question",
+      "candidates"
+    ],
+    "candidates": [
+      {
+        "id": "8034969d-3f19-4856-97a7-38de372f400d",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 1.086,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 0.923,
+        "retrieval": "hybrid"
+      },
+      {
+        "id": "9518cb47-1d77-437b-a40e-df6b09640e2a",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 3,
+        "content": "栖光阅读灯自签收日起提供一年有限保修。人为损坏、进水和私自拆机不属于免费保修范围；故障请先联系人工客服。",
+        "score": 0.802,
+        "retrieval": "hybrid"
+      }
+    ],
+    "modelResponse": "{\"intent\":\"KNOWLEDGE\",\"orderNumber\":\"\",\"kind\":\"QUESTION\",\"sourceIds\":[\"80349690-3f19-4856-97a7-38de372f400d\"]}"
+  }
+]

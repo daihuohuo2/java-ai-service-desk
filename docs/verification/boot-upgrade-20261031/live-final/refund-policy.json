@@ -1,0 +1,26 @@
+{
+  "id": "refund-policy",
+  "question": "签收后可以退货吗？需要满足哪些条件？",
+  "pass": true,
+  "latencyMs": 1035,
+  "result": {
+    "runId": "e0e97bdb-f2c5-4428-8c6b-1520415c1998",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v2-short-refs",
+    "intent": "KNOWLEDGE",
+    "citations": [
+      {
+        "id": "fcfdbfc0-a700-47d8-95f2-d87362c8ee1a",
+        "title": "售后与退换货规则",
+        "version": 1,
+        "ordinal": 1,
+        "content": "签收后 7 天内，商品未使用且包装、配件完好，可申请七天无理由退货。定制商品和已拆封的个人卫生类商品不适用。是否通过以人工审核为准。",
+        "score": 0.624,
+        "retrieval": "hybrid"
+      }
+    ],
+    "tool": "knowledge.search",
+    "answer": "根据目前已发布的资料：\n\n[1] 签收后 7 天内，商品未使用且包装、配件完好，可申请七天无理由退货。定制商品和已拆封的个人卫生类商品不适用。是否通过以人工审核为准。",
+    "latencyMs": 1045
+  }
+}

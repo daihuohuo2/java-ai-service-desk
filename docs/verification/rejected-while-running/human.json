@@ -1,0 +1,7 @@
+{
+  "id": "human",
+  "question": "我需要人工客服帮助，请帮我创建咨询草稿",
+  "pass": false,
+  "error": "POST /chat/ask: 429 {\"error\":\"上一条咨询仍在处理中，请稍候\"}",
+  "latencyMs": 16
+}

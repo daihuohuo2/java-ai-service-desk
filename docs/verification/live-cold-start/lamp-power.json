@@ -1,0 +1,26 @@
+{
+  "id": "lamp-power",
+  "question": "栖光阅读灯需要充电吗？",
+  "pass": true,
+  "latencyMs": 70075,
+  "result": {
+    "runId": "9e9f5559-6cab-4256-8bd9-0c00e5b05215",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v1",
+    "intent": "KNOWLEDGE",
+    "citations": [
+      {
+        "id": "b1e0de8a-5c6a-4b51-a074-4323dc39e99c",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 1,
+        "content": "栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+        "score": 1.32,
+        "retrieval": "hybrid"
+      }
+    ],
+    "tool": "knowledge.search",
+    "answer": "根据目前已发布的资料：\n\n[1] 栖光阅读灯需要连接电源使用，不含内置电池，不支持无线充电。使用额定 5V/2A 电源适配器。",
+    "latencyMs": 69476
+  }
+}

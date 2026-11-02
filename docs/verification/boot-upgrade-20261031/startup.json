@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-10-31T16:13:41.2214900+08:00",
+  "healthUrl": "http://127.0.0.1:19082/health",
+  "health": "UP",
+  "pageStatus": 200,
+  "hasAppRoot": true
+}

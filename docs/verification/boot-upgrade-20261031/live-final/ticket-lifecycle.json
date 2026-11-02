@@ -1,0 +1,136 @@
+{
+  "id": "confirmed-ticket-lifecycle",
+  "pass": true,
+  "ticket": {
+    "id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+    "ticket_no": "TK-82A9888E",
+    "owner_id": "customer",
+    "order_id": "order-1",
+    "kind": "REFUND",
+    "subject": "售后处理申请",
+    "description": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+    "status": "CLOSED",
+    "assignee_id": "agent",
+    "request_key": "customer:464b5618-b718-48cc-aee0-e0c45c8efd56",
+    "request_hash": "22d58bb564390e0bcb4401320291fd75a8e2113530be514660d7b191fb21ef89",
+    "version": 5,
+    "created_at": "2026-10-31T08:11:24.118086600Z",
+    "updated_at": "2026-10-31T08:11:24.617810578Z",
+    "customer_name": "陈一诺",
+    "product_name": "栖光阅读灯",
+    "order_no": "ZS20261030001",
+    "assignee_name": "顾青 · 客服",
+    "events": [
+      {
+        "id": "ddfa2bbb-fb59-42ec-ab3f-9a84440e69c1",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "customer",
+        "event_type": "CREATED",
+        "content": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+        "created_at": "2026-10-31T08:11:24.119306138Z",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER"
+      },
+      {
+        "id": "4ff4f41a-7b31-4aea-8a99-658d311b1f4f",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "REPLY",
+        "content": "已接单，正在核实演示售后申请。",
+        "created_at": "2026-10-31T08:11:24.555773879Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "72fb8de0-650d-411f-b69e-f7119a4b4a0c",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "STATUS",
+        "content": "OPEN → IN_PROGRESS",
+        "created_at": "2026-10-31T08:11:24.556638266Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "3c07c4da-7763-4b53-89ba-ba719e754ad3",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "REPLY",
+        "content": "请确认包装和配件是否齐全。",
+        "created_at": "2026-10-31T08:11:24.572757555Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "63f5a50c-f91c-4f22-8e4a-fbd5b8bb743d",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "STATUS",
+        "content": "IN_PROGRESS → WAITING_CUSTOMER",
+        "created_at": "2026-10-31T08:11:24.573425498Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "7c4865bc-2bd8-4771-abd3-4f640e4238f7",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "customer",
+        "event_type": "REPLY",
+        "content": "包装和配件齐全，商品未使用。",
+        "created_at": "2026-10-31T08:11:24.588109051Z",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER"
+      },
+      {
+        "id": "acf92fa6-980f-4a21-b4a2-e7de825e3dd3",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "customer",
+        "event_type": "STATUS",
+        "content": "WAITING_CUSTOMER → IN_PROGRESS",
+        "created_at": "2026-10-31T08:11:24.588742740Z",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER"
+      },
+      {
+        "id": "6004e6d0-9e05-46b1-a87e-5b1907e7dd12",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "REPLY",
+        "content": "已提供后续寄回与审核流程，演示服务已完成；未执行真实退款。",
+        "created_at": "2026-10-31T08:11:24.602684867Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "f0b3593c-8fd2-470b-a789-84473e92da0e",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "agent",
+        "event_type": "STATUS",
+        "content": "IN_PROGRESS → RESOLVED",
+        "created_at": "2026-10-31T08:11:24.603455579Z",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT"
+      },
+      {
+        "id": "c298e570-f3f7-41e5-bd47-c0c1e1301d2e",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "customer",
+        "event_type": "REPLY",
+        "content": "已了解处理流程，确认关闭。",
+        "created_at": "2026-10-31T08:11:24.618523735Z",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER"
+      },
+      {
+        "id": "7c99af4d-55ac-4d57-ab4a-9b1171b4e5b0",
+        "ticket_id": "1bcef095-87bf-4eda-b862-7c0b6e875aac",
+        "actor_id": "customer",
+        "event_type": "STATUS",
+        "content": "RESOLVED → CLOSED",
+        "created_at": "2026-10-31T08:11:24.619306993Z",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "unknown-spec",
+  "question": "云屿保温杯保证保温多少小时？",
+  "pass": false,
+  "error": "POST /chat/ask: 429 {\"error\":\"上一条咨询仍在处理中，请稍候\"}",
+  "latencyMs": 21
+}

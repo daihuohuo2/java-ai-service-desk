@@ -1,0 +1,7 @@
+{
+  "id": "policy-not-action",
+  "question": "我只是问退货政策，不要替我提交任何申请",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

@@ -1,0 +1,7 @@
+{
+  "id": "refund-draft",
+  "question": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+  "pass": false,
+  "error": "POST /chat/ask: 429 {\"error\":\"上一条咨询仍在处理中，请稍候\"}",
+  "latencyMs": 16
+}

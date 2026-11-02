@@ -1,0 +1,7 @@
+{
+  "id": "unknown-product",
+  "question": "火星牌洗衣机的价格和参数是什么？",
+  "pass": false,
+  "error": "fetch failed",
+  "latencyMs": 2
+}

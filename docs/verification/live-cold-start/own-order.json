@@ -1,0 +1,31 @@
+{
+  "id": "own-order",
+  "question": "帮我查询订单 ZS20261030001",
+  "pass": true,
+  "latencyMs": 35048,
+  "result": {
+    "runId": "05aadee9-c024-410a-a275-a568018afba4",
+    "mode": "OLLAMA",
+    "promptVersion": "planner-v1",
+    "intent": "ORDER",
+    "citations": [],
+    "orders": [
+      {
+        "id": "order-1",
+        "order_no": "ZS20261030001",
+        "owner_id": "customer",
+        "product_id": "P100",
+        "quantity": 1,
+        "total_cents": 19900,
+        "status": "DELIVERED",
+        "created_at": "2026-10-25T11:29:28.687316374Z",
+        "delivered_at": "2026-10-28T11:29:28.687385411Z",
+        "product_name": "栖光阅读灯",
+        "category": "桌面照明"
+      }
+    ],
+    "tool": "orders.lookupOwned",
+    "answer": "已从业务系统查询到您本人的订单。以下金额、商品和状态来自订单记录。",
+    "latencyMs": 34298
+  }
+}

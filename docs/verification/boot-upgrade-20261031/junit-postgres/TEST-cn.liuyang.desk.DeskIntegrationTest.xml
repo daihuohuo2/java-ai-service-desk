@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="cn.liuyang.desk.DeskIntegrationTest" time="13.973" tests="36" errors="0" skipped="0" failures="0" flakes="0">
+  <testcase name="maliciousSourceIdCannotReachAnswer" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.089">
+  </testcase>
+  <testcase name="proposalDoesNotCreateTicketUntilConfirmed" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.078" />
+  <testcase name="csrfRequiredForMutation" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.172" />
+  <testcase name="unauthenticatedOrdersDenied" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.039" />
+  <testcase name="foreignOrderIdIsHidden" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.105" />
+  <testcase name="foreignTicketIsHidden" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.031" />
+  <testcase name="productScopePreventsCrossProductCitations" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.021" />
+  <testcase name="optimisticLockRejectsStaleAgentUpdate" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.062" />
+  <testcase name="uploadInvalidUtf8Rejected" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.033" />
+  <testcase name="customerCannotResolveOwnTicket" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.034" />
+  <testcase name="idempotencyKeyCannotChangePayload" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.033" />
+  <testcase name="chatReplayReturnsSameRunAndNoDuplicateMessages" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.06" />
+  <testcase name="foreignChatThreadIsHidden" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.017" />
+  <testcase name="anotherCustomerCannotConfirmProposal" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.023" />
+  <testcase name="customerCannotOpenAdminOverview" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.01" />
+  <testcase name="agentCannotEditKnowledge" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.01" />
+  <testcase name="stateMachineRejectsSkippingIntake" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.032" />
+  <testcase name="repeatedTicketCreationIsIdempotent" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.046" />
+  <testcase name="customerReplyResumesWaitingTicket" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.075" />
+  <testcase name="resolutionRequiresExplanation" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.042" />
+  <testcase name="customerOnlySeesOwnOrders" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.12" />
+  <testcase name="chatToolChecksOrderOwnership" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.035" />
+  <testcase name="staffCanSeeQueueButNotCustomerOrders" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.028" />
+  <testcase name="customerCannotReadAuditLog" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.007" />
+  <testcase name="modelFailureDoesNotPretendSuccessfulIndex" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.011" />
+  <testcase name="oversizedQuestionRejected" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.185" />
+  <testcase name="shippedOrderCannotRefundBeforeReceipt" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.015" />
+  <testcase name="ticketCreationRequiresOrderForRefund" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.01" />
+  <testcase name="foreignOrderNumberIsHidden" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.014" />
+  <testcase name="uploadWrongFileTypeRejected" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.013" />
+  <testcase name="ticketCreationRejectsAnotherOwnersOrder" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.015" />
+  <testcase name="healthIsPublic" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.052" />
+  <testcase name="expiredProposalCannotBeConfirmed" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.018" />
+  <testcase name="chatAfterSalesIsOnlyDraft" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.043" />
+  <testcase name="completeWorkflowAndClosedTicketIsImmutable" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.058" />
+  <testcase name="disabledKnowledgeNeverRetrieved" classname="cn.liuyang.desk.DeskIntegrationTest" time="0.013" />
+</testsuite>

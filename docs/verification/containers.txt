@@ -1,0 +1,4 @@
+NAME                         IMAGE                                                                     COMMAND                  SERVICE   CREATED              STATUS                    PORTS
+java-ai-service-desk-api-1   sha256:69c8ccf83a02c7755806e2f3c5e5a9eebbd46fb2fde6e11b1f036f42f0c45b42   "java -XX:MaxRAMPerc…"   api       14 minutes ago       Up 7 minutes (healthy)    8080/tcp
+java-ai-service-desk-db-1    postgres:17.6-alpine                                                      "docker-entrypoint.s…"   db        35 minutes ago       Up 35 minutes (healthy)   5432/tcp
+java-ai-service-desk-web-1   java-ai-service-desk-web:1.0.0                                            "/docker-entrypoint.…"   web       About a minute ago   Up About a minute         127.0.0.1:19082->80/tcp
