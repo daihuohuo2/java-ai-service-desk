@@ -14,13 +14,13 @@ files=[]
 excluded={'docs/verification/containers.json','docs/verification/start-script.txt',
           'docs/verification/boot-upgrade-20261031/jar-sha256.json',
           'docs/verification/boot-upgrade-20261031/vscode-zero-problems.png'}
-for directory in ('backend/src','backend/.mvn','frontend/src','frontend/public','frontend/tests','frontend/e2e','frontend/dist','scripts','docs','learning','deploy','.github','.vscode'):
+for directory in ('backend/desk-common/src','backend/desk-domain/src','backend/desk-app/src','backend/.mvn','frontend/src','frontend/public','frontend/tests','frontend/e2e','frontend/dist','scripts','docs','learning','deploy','.github','.vscode'):
     files.extend(p for p in (root/directory).rglob('*') if p.is_file()
                  and '__pycache__' not in p.parts and p.suffix not in ('.log','.pyc','.tmp')
                  and p.relative_to(root).as_posix() not in excluded)
 files.extend(root.glob('compose*.yaml'))
 files.extend(root/name for name in ('frontend/playwright.config.ts','backend/.dockerignore','frontend/.dockerignore'))
-for name in ('README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY.md','.gitattributes','.gitignore','.env.example','compose.yaml','compose.models.yaml','compose.gpu.yaml','backend/pom.xml','backend/mvnw','backend/mvnw.cmd','backend/Dockerfile','backend/target/service-desk-1.0.0.jar','frontend/package.json','frontend/package-lock.json','frontend/index.html','frontend/tsconfig.json','frontend/vite.config.ts','frontend/Dockerfile','frontend/nginx.conf'):
+for name in ('README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY.md','.gitattributes','.gitignore','.env.example','compose.yaml','compose.models.yaml','compose.gpu.yaml','backend/pom.xml','backend/desk-common/pom.xml','backend/desk-domain/pom.xml','backend/desk-app/pom.xml','backend/mvnw','backend/mvnw.cmd','backend/Dockerfile','backend/desk-app/target/service-desk-1.0.0.jar','frontend/package.json','frontend/package-lock.json','frontend/index.html','frontend/tsconfig.json','frontend/vite.config.ts','frontend/Dockerfile','frontend/nginx.conf'):
     path=root/name
     if not path.is_file():raise SystemExit('Missing required delivery file: '+name)
     files.append(path)
