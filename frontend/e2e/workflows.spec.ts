@@ -88,7 +88,7 @@ test("administrator can submit and inspect a durable index job", async ({
   ).toBeVisible();
   const result = await page.request.get("/api/knowledge/jobs");
   expect(result.ok()).toBeTruthy();
-  expect((await result.json())[0].state).toBe("PENDING");
+  expect((await result.json()).data[0].state).toBe("PENDING");
   await page.screenshot({
     path: info.outputPath("knowledge-jobs.png"),
     fullPage: true,

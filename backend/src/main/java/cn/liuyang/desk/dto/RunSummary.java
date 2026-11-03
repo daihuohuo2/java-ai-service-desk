@@ -14,5 +14,5 @@ public class RunSummary {
   private String state;
   private String modelMode;
   private String createdAt;
-  private long latencyMs;
+  private Long latencyMs;
 }

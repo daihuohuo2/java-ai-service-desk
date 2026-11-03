@@ -4,8 +4,8 @@ export async function downloadTickets(status: string, query: string) {
     { credentials: "include" },
   );
   if (!response.ok) {
-    const result = await response.json().catch(() => ({ error: "导出失败" }));
-    throw new Error(result.error || "导出失败");
+    const result = await response.json().catch(() => ({ message: "导出失败" }));
+    throw new Error(result.message || "导出失败");
   }
   const url = URL.createObjectURL(await response.blob());
   const link = document.createElement("a");

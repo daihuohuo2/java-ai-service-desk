@@ -19,7 +19,7 @@ public class TicketEvent {
 
   private String ticketId;
   private String actorId;
-  private String type;
+  private String eventType;
   private String content;
   private String createdAt;
 

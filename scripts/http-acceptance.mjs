@@ -6,7 +6,7 @@ class Client{
  async req(route,method='GET',body,headers={}){
   const r=await fetch(base+route,{method,headers:{'Content-Type':'application/json',Cookie:[...this.cookies].map(([k,v])=>`${k}=${v}`).join('; '),...(method!=='GET'?{'X-CSRF-TOKEN':this.csrf}:{}),...headers},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(160000)});
   for(const c of r.headers.getSetCookie()){const p=c.split(';')[0],i=p.indexOf('=');this.cookies.set(p.slice(0,i),p.slice(i+1));}
-  const text=await r.text();let data;try{data=JSON.parse(text)}catch{data=text};return {status:r.status,data,headers:r.headers};
+  const text=await r.text();let data;try{data=JSON.parse(text)}catch{data=text};if(data?.code===0)data=data.data;return {status:r.status,data,headers:r.headers};
  }
  async login(user,password){this.csrf=(await this.req('/api/auth/csrf')).data.token;const before=this.cookies.get('DESK_SESSION');const r=await this.req('/api/auth/login','POST',{username:user,password});if(r.status!==200)throw Error('Login failed');this.csrf=(await this.req('/api/auth/csrf')).data.token;return before!==this.cookies.get('DESK_SESSION');}
 }

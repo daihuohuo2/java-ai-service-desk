@@ -89,6 +89,6 @@ desk:
   model-timeout-seconds: ${MODEL_TIMEOUT_SECONDS:90}
   allowed-origin: ${APP_ORIGIN:http://127.0.0.1:19081,http://localhost:19081,http://127.0.0.1:19082,http://localhost:19082}
   deployment-mode: ${DEPLOYMENT_MODE:local}
-mybatis:
+mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

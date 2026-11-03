@@ -48,6 +48,61 @@ class FullstackIntegrationTest {
   @Autowired TicketService tickets;
   @MockitoBean AiGateway ai;
 
+  @Test
+  void jsonSuccessAndSecurityErrorsShareEnvelope() throws Exception {
+    mvc.perform(get("/api/auth/me").with(user("customer").roles("CUSTOMER")))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.code").value(0))
+        .andExpect(jsonPath("$.data.username").value("customer"))
+        .andExpect(jsonPath("$.data.password_hash").doesNotExist());
+    mvc.perform(get("/api/orders"))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.code").value(401))
+        .andExpect(jsonPath("$.message").value("请先登录"));
+    mvc.perform(post("/api/tickets").with(user("customer").roles("CUSTOMER")))
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.code").value(403));
+  }
+
+  @Test
+  void groupedValidationAndPathConsistencyProtectProductUpdates() throws Exception {
+    String body = store.encode(new ProductInput("名称", "分类", 1, "说明", true));
+    mvc.perform(put("/api/admin/products/P100").with(user("admin").roles("ADMIN"))
+            .with(csrf()).contentType("application/json").content(body))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.data.id").exists());
+    String mismatched = store.encode(new ProductInput("名称", "分类", 1, "说明", true, "P200"));
+    mvc.perform(put("/api/admin/products/P100").with(user("admin").roles("ADMIN"))
+            .with(csrf()).contentType("application/json").content(mismatched))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.message").value("路径编号和请求中的商品编号必须一致"));
+    mvc.perform(post("/api/admin/products").with(user("admin").roles("ADMIN"))
+            .with(csrf()).contentType("application/json").content(mismatched))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.data.id").exists());
+  }
+
+  @Test
+  void customKindValidationReturnsFieldError() throws Exception {
+    mvc.perform(post("/api/tickets").with(user("customer").roles("CUSTOMER"))
+            .with(csrf()).header("Idempotency-Key", "enum-test-key")
+            .contentType("application/json")
+            .content("{\"kind\":\"INVALID\",\"subject\":\"标题\",\"description\":\"内容\"}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.code").value(400))
+        .andExpect(jsonPath("$.data.kind").value("不支持的工单类型"));
+  }
+
+  @Test
+  void ticketResponseDoesNotExposeInternalIdempotencyHashes() throws Exception {
+    var ticket = tickets.create("customer", null, "QUESTION", "类型测试", "说明", "typed-ticket-test");
+    mvc.perform(get("/api/tickets/" + ticket.getId()).with(user("customer").roles("CUSTOMER")))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.events[0].event_type").value("CREATED"))
+        .andExpect(jsonPath("$.data.request_key").doesNotExist())
+        .andExpect(jsonPath("$.data.request_hash").doesNotExist());
+  }
+
   @BeforeEach
   void models() {
     when(ai.embed(anyString())).thenReturn(new float[] {1, 0, 0});
@@ -58,10 +113,10 @@ class FullstackIntegrationTest {
   void orderPageUsesTypedRowsAndPreservesWireNames() throws Exception {
     mvc.perform(get("/api/orders/page?size=1").with(user("customer").roles("CUSTOMER")))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.total").value(2))
-        .andExpect(jsonPath("$.pages").value(2))
-        .andExpect(jsonPath("$.items.length()").value(1))
-        .andExpect(jsonPath("$.items[0].order_no").value("ZS20261030001"));
+        .andExpect(jsonPath("$.data.total").value(2))
+        .andExpect(jsonPath("$.data.pages").value(2))
+        .andExpect(jsonPath("$.data.items.length()").value(1))
+        .andExpect(jsonPath("$.data.items[0].order_no").value("ZS20261030001"));
   }
 
   @Test
@@ -152,7 +207,7 @@ class FullstackIntegrationTest {
   void ticketPaginationIsScopedToCustomer() throws Exception {
     mvc.perform(get("/api/tickets/page").with(user("customer2").roles("CUSTOMER")))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.total").value(0));
+        .andExpect(jsonPath("$.data.total").value(0));
   }
 
   @Test
@@ -160,7 +215,7 @@ class FullstackIntegrationTest {
     mvc.perform(
             get("/api/tickets/page?status=IN_PROGRESS&query=物流").with(user("agent").roles("AGENT")))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.items[0].ticket_no").value("TK-DEMO-001"));
+        .andExpect(jsonPath("$.data.items[0].ticket_no").value("TK-DEMO-001"));
   }
 
   @Test
@@ -224,7 +279,7 @@ class FullstackIntegrationTest {
                 .contentType("application/json")
                 .content("{}"))
         .andExpect(status().isAccepted())
-        .andExpect(jsonPath("$.state").value("PENDING"));
+        .andExpect(jsonPath("$.data.state").value("PENDING"));
     verify(ai, never()).embed(anyString());
   }
 

@@ -93,7 +93,7 @@ class DeskIntegrationTest {
   void customerOnlySeesOwnOrders() throws Exception {
     mvc.perform(get("/api/orders").with(user("customer").roles("CUSTOMER")))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.length()").value(2));
+        .andExpect(jsonPath("$.data.length()").value(2));
   }
 
   @Test
@@ -379,7 +379,7 @@ class DeskIntegrationTest {
   void staffCanSeeQueueButNotCustomerOrders() throws Exception {
     mvc.perform(get("/api/tickets").with(user("agent").roles("AGENT"))).andExpect(status().isOk());
     mvc.perform(get("/api/orders").with(user("agent").roles("AGENT")))
-        .andExpect(jsonPath("$.length()").value(0));
+        .andExpect(jsonPath("$.data.length()").value(0));
   }
 
   @Test

@@ -24,6 +24,6 @@ public class ChatRun {
   private String state;
   @com.fasterxml.jackson.annotation.JsonIgnore private String resultJson;
   private String modelMode;
-  private long latencyMs;
+  private Long latencyMs;
   private String createdAt;
 }

@@ -13,7 +13,7 @@ public class AuditResponse {
   private String id;
   private String actorId;
   private String action;
-  private String target;
+  private String targetId;
   private String summary;
   private String createdAt;
   private String actorName;

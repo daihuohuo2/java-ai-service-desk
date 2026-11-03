@@ -84,6 +84,7 @@ export function Products({ onToast }: { onToast: (s: string) => void }) {
                 await api("/admin/products" + (edit.id ? "/" + edit.id : ""), {
                   method: edit.id ? "PUT" : "POST",
                   body: JSON.stringify({
+                    id: edit.id,
                     name: edit.name,
                     category: edit.category,
                     priceCents: Math.round(Number(edit.price_cents)),

@@ -16,6 +16,7 @@ class Client {
     }
     const text = await r.text(); let data;
     try { data = JSON.parse(text); } catch { data = text; }
+    if(data?.code===0)data=data.data;
     return {status: r.status, data};
   }
   async login(username, password) {
@@ -42,9 +43,9 @@ const id = created.data.id;
 await customer.request('/products');
 await customer.request('/products');
 check('product cache path serves new product', (await customer.request('/products')).data.some(p=>p.id===id && p.price_cents===100));
-assert.equal((await admin.request('/admin/products/'+id,'PUT',{...payload,priceCents:200})).status,200);
+assert.equal((await admin.request('/admin/products/'+id,'PUT',{...payload,id,priceCents:200})).status,200);
 check('product update switches cache generation', (await customer.request('/products')).data.some(p=>p.id===id && p.price_cents===200));
-await admin.request('/admin/products/'+id,'PUT',{...payload,active:false});
+await admin.request('/admin/products/'+id,'PUT',{...payload,id,active:false});
 check('deactivated product disappears immediately', !(await customer.request('/products')).data.some(p=>p.id===id));
 const key = crypto.randomUUID();
 const documents = (await admin.request('/knowledge')).data;

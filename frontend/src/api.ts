@@ -3,7 +3,7 @@ let csrf = "";
 export async function refreshCsrf() {
   const r = await fetch("/api/auth/csrf", { credentials: "include" });
   if (!r.ok) throw new Error("无法连接服务");
-  csrf = (await r.json()).token;
+  csrf = (await r.json()).data.token;
 }
 export async function api<T = any>(
   path: string,
@@ -25,9 +25,9 @@ export async function api<T = any>(
   if (r.status === 204) return undefined as T;
   const data = await r
     .json()
-    .catch(() => ({ error: "服务返回了无法识别的响应" }));
-  if (!r.ok) throw new Error(data.error || "请求失败");
-  return data;
+    .catch(() => ({ code: -1, message: "服务返回了无法识别的响应" }));
+  if (!r.ok || data.code !== 0) throw new Error(data.message || "请求失败");
+  return data.data as T;
 }
 export const post = (path: string, body: any = {}, key?: string) =>
   api(path, {
@@ -54,7 +54,7 @@ export async function askStream(
   });
   if (!r.ok) {
     const e = await r.json();
-    throw new Error(e.error || "咨询失败");
+    throw new Error(e.message || "咨询失败");
   }
   const reader = r.body?.getReader();
   if (!reader) throw new Error("无法读取回复");

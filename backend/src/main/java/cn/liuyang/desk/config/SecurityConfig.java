@@ -64,13 +64,13 @@ public class SecurityConfig {
                         (req, res, ex) -> {
                           res.setStatus(401);
                           res.setContentType("application/json;charset=UTF-8");
-                          res.getWriter().write("{\"error\":\"请先登录\"}");
+                          res.getWriter().write("{\"code\":401,\"message\":\"请先登录\",\"data\":null}");
                         })
                     .accessDeniedHandler(
                         (req, res, ex) -> {
                           res.setStatus(403);
                           res.setContentType("application/json;charset=UTF-8");
-                          res.getWriter().write("{\"error\":\"权限不足或会话校验失败，请刷新后重试\"}");
+                          res.getWriter().write("{\"code\":403,\"message\":\"权限不足或会话校验失败，请刷新后重试\",\"data\":null}");
                         }))
         .sessionManagement(c -> c.sessionFixation(f -> f.changeSessionId()))
         .logout(
