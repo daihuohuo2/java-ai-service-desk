@@ -1,10 +1,13 @@
 package cn.liuyang.desk.controller;
 
 import cn.liuyang.desk.common.ApiException;
+import cn.liuyang.desk.dto.*;
+import cn.liuyang.desk.entity.ChatThread;
 import cn.liuyang.desk.security.Actor;
 import cn.liuyang.desk.service.ChatService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,17 +28,17 @@ public class ChatController {
   }
 
   @GetMapping("/threads")
-  Object threads() {
+  List<ChatThread> threads() {
     return chats.threads(actor.id());
   }
 
   @PostMapping("/threads")
-  Object create() {
+  ChatThread create() {
     return chats.newThread(actor.id());
   }
 
   @GetMapping("/threads/{id}/messages")
-  Object messages(@PathVariable String id) {
+  List<ChatMessageResponse> messages(@PathVariable String id) {
     return chats.messages(actor.id(), id);
   }
 
@@ -43,7 +46,7 @@ public class ChatController {
       @NotBlank @Size(max = 40) String threadId, @NotBlank @Size(max = 1000) String question) {}
 
   @PostMapping("/ask")
-  Object ask(
+  ChatAnswer ask(
       @RequestHeader(value = "Idempotency-Key", required = false) String key,
       @Valid @RequestBody Question q) {
     return chats.answer(actor.id(), q.threadId(), q.question().trim(), key);

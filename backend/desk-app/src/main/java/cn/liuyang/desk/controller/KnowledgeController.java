@@ -1,6 +1,8 @@
 package cn.liuyang.desk.controller;
 
 import cn.liuyang.desk.common.ApiException;
+import cn.liuyang.desk.dto.*;
+import cn.liuyang.desk.entity.KnowledgeDocument;
 import cn.liuyang.desk.security.Actor;
 import cn.liuyang.desk.service.KnowledgeService;
 import jakarta.validation.Valid;
@@ -23,7 +25,7 @@ public class KnowledgeController {
   }
 
   @GetMapping
-  Object list() {
+  List<KnowledgeDocument> list() {
     return knowledge.list();
   }
 
@@ -33,12 +35,12 @@ public class KnowledgeController {
       @NotBlank @Size(max = 30000) String content) {}
 
   @PostMapping
-  Object create(@Valid @RequestBody Document d) {
+  KnowledgeDocument create(@Valid @RequestBody Document d) {
     return knowledge.add(d.title(), d.productId(), d.content(), actor.id());
   }
 
   @PostMapping("/upload")
-  Object upload(
+  KnowledgeDocument upload(
       @RequestParam String title,
       @RequestParam(required = false) String productId,
       @RequestParam MultipartFile file)
@@ -66,17 +68,17 @@ public class KnowledgeController {
   record Active(boolean active) {}
 
   @PutMapping("/{id}")
-  Object active(@PathVariable String id, @RequestBody Active r) {
+  ActiveResponse active(@PathVariable String id, @RequestBody Active r) {
     return knowledge.setActive(id, r.active(), actor.id());
   }
 
   @PostMapping("/reindex")
-  Object index() {
+  IndexResult index() {
     return knowledge.index(null, actor.id());
   }
 
   @PostMapping("/{id}/reindex")
-  Object indexOne(@PathVariable String id) {
+  IndexResult indexOne(@PathVariable String id) {
     return knowledge.index(id, actor.id());
   }
 }

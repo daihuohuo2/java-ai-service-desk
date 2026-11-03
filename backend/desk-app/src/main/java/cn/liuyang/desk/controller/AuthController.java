@@ -44,12 +44,12 @@ public class AuthController {
   }
 
   @GetMapping("/auth/me")
-  Object me() {
+  UserResponse me() {
     return actor.current();
   }
 
   @PostMapping("/auth/login")
-  Object login(
+  UserResponse login(
       @Valid @RequestBody Login input, HttpServletRequest request, HttpServletResponse response) {
     User user = auth.authenticate(input.username(), input.password(), request.getRemoteAddr());
     request.getSession();
@@ -68,7 +68,7 @@ public class AuthController {
   }
 
   @GetMapping("/meta")
-  Object meta(@Value("${desk.demo}") boolean demo) {
+  MetaResponse meta(@Value("${desk.demo}") boolean demo) {
     return new MetaResponse("知序客服工作台", "1.0.0", demo);
   }
 }
