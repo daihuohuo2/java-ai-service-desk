@@ -1,0 +1,13 @@
+[INFO]   from desk-common\pom.xml
+[INFO]   from desk-domain\pom.xml
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.312 s -- in cn.liuyang.desk.domain.DtoValidationTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.476 s -- in cn.liuyang.desk.domain.TicketPolicyTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO]   from desk-app\pom.xml
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.694 s -- in cn.liuyang.desk.ai.AiGatewayTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.785 s -- in cn.liuyang.desk.RedisCatalogCacheTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in cn.liuyang.desk.service.GroundingTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.326 s -- in cn.liuyang.desk.service.OrderServiceTest
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  01:03 min

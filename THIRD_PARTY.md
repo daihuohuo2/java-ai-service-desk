@@ -1,5 +1,7 @@
 # 第三方依赖与素材
 
+2026-11-03 学习版使用 MyBatis-Plus 3.5.18 的 Boot 4 Starter 替换旧 MyBatis Starter，新增 Lombok 1.18.48、MapStruct 1.6.3 和 lombok-mapstruct-binding 0.2.0；格式工具固定为 google-java-format 1.25.2，下载时校验 SHA-256。实际依赖分布见 `backend/pom.xml` 与三个子模块 POM，工具 JAR 不随源码交付。
+
 本次全栈扩展新增 MyBatis / MyBatis Spring Boot Starter、Spring Data Redis、Spring AMQP、MySQL Connector/J、Flyway MySQL、Micrometer Prometheus、React Router、Playwright 和 Prettier；可选容器包括 MySQL 8.4、Redis 8.2、RabbitMQ 4.1、Prometheus 3.5。它们各自的 LICENSE/NOTICE 和镜像条款继续适用，项目 MIT 不重新许可这些依赖。容器、模型及 npm/Maven 依赖不会提交到 GitHub 源码仓库；交付 JAR 包含运行依赖，分发时应保留相应声明。实际版本以 pom、锁文件和 Compose 为准。
 
 

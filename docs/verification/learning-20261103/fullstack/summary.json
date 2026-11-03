@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-11-03T13:17:21.119Z",
+  "baseUrl": "http://127.0.0.1:21984",
+  "tests": 14,
+  "passed": 14,
+  "indexJob": {
+    "id": "2d29b9db-44a1-46af-a947-43aa7adbfc91",
+    "documentId": "doc-earbuds",
+    "state": "SUCCEEDED",
+    "attempts": 1,
+    "indexed": 2,
+    "total": 2,
+    "error": null,
+    "createdAt": "2026-11-03T13:17:10.400639400Z",
+    "updatedAt": "2026-11-03T13:17:20.714477200Z"
+  },
+  "results": [
+    {
+      "name": "typed order page reports exact total",
+      "pass": true
+    },
+    {
+      "name": "second page is distinct",
+      "pass": true
+    },
+    {
+      "name": "paged orders retain owner isolation",
+      "pass": true
+    },
+    {
+      "name": "customer cannot submit index job",
+      "pass": true
+    },
+    {
+      "name": "product cache path serves new product",
+      "pass": true
+    },
+    {
+      "name": "product update switches cache generation",
+      "pass": true
+    },
+    {
+      "name": "deactivated product disappears immediately",
+      "pass": true
+    },
+    {
+      "name": "async indexing accepts durable job",
+      "pass": true
+    },
+    {
+      "name": "index submission idempotency",
+      "pass": true
+    },
+    {
+      "name": "real worker completes real model embeddings",
+      "pass": true
+    },
+    {
+      "name": "completed index job cannot be retried",
+      "pass": true
+    },
+    {
+      "name": "customer paged tickets remain private",
+      "pass": true
+    },
+    {
+      "name": "CSV download is available",
+      "pass": true
+    },
+    {
+      "name": "public frontend does not expose metrics",
+      "pass": true
+    }
+  ]
+}

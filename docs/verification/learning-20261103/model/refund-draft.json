@@ -1,0 +1,28 @@
+{
+  "id": "refund-draft",
+  "question": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+  "pass": true,
+  "latencyMs": 1272,
+  "result": {
+    "answer": "已整理一份待确认的工单草稿。请核对内容后点击“确认创建工单”；此时还没有创建工单，也未批准退款。草稿 15 分钟内有效。",
+    "citations": [],
+    "intent": "AFTER_SALES",
+    "latencyMs": 1250,
+    "mode": "OLLAMA",
+    "orders": null,
+    "promptVersion": "planner-v2-short-refs",
+    "proposal": {
+      "created_at": "2026-11-03T13:17:35.433264100Z",
+      "description": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+      "expires_at": "2026-11-03T13:32:35.430242900Z",
+      "id": "ed172739-a997-4771-912f-53ff8b7e7918",
+      "kind": "REFUND",
+      "order_id": "order-1",
+      "owner_id": "customer",
+      "subject": "售后处理申请",
+      "ticket_id": null
+    },
+    "runId": "c4f6da68-ce52-44f1-8eff-d128abe27e4e",
+    "tool": "tickets.prepareDraft"
+  }
+}

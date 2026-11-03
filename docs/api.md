@@ -1,5 +1,7 @@
 # HTTP 接口说明
 
+2026-11-03 学习版：所有普通 JSON 成功响应统一为 `{code:0,message:"成功",data:业务对象}`。下表中的返回字段指 data 内部。校验失败的 data 可为字段错误字典；CSV、SSE、204 和 Actuator 不包装。商品 POST 禁止指定 id，PUT 必须携带与路径相同的 id。
+
 ## 全栈扩展接口（2026-11-02）
 
 路径均位于 `/api` 下，沿用会话、CSRF 和角色权限。
@@ -23,7 +25,7 @@ page 为 1–1,000,000，size 为 1–100；订单 query 最多 40 字符，工�
 
 健康检查：通过 Nginx 访问 `/health`；Java 容器内部为 `/actuator/health`。两个路径不要混用。
 
-先 `GET /auth/csrf` 获取 `{token,headerName}` 并保留 Cookie，再 `POST /auth/login` 发送 `{username,password}`。登录成功会旋转会话并清除旧 CSRF，再次获取 token。浏览器封装位于 `frontend/src/api.ts`，可运行 HTTP 客户端参考 `scripts/http-acceptance.mjs`。
+先 `GET /auth/csrf` 获取 `data.token` 并保留 Cookie，再 `POST /auth/login` 发送 `{username,password}`。登录成功会旋转会话并清除旧 CSRF，再次获取 token。浏览器封装位于 `frontend/src/api.ts`，可运行 HTTP 客户端参考 `scripts/http-acceptance.mjs`。
 
 | 方法 / 路径 | 请求要点 | 权限/行为 |
 |---|---|---|
@@ -55,7 +57,7 @@ page 为 1–1,000,000，size 为 1–100；订单 query 最多 40 字符，工�
 | GET /admin/audit | 无 | 管理员最近 100 条审计 |
 | GET /admin/products | 无 | 管理员全部商品 |
 | POST /admin/products | name,category,priceCents,description,active | 管理员新增 |
-| PUT /admin/products/{id} | 同上 | 管理员修改/下架 |
+| PUT /admin/products/{id} | 同上并提供与路径一致的 id | 管理员修改/下架 |
 
 ## 示例请求
 
@@ -77,6 +79,6 @@ page 为 1–1,000,000，size 为 1–100；订单 query 最多 40 字符，工�
 
 ## 错误与重试
 
-常规错误体为 `{"error":"说明"}`。400 参数不合法；401 未登录；403 角色/CSRF/Origin 不允许；404 无资源或不属于本人；409 版本/状态/幂等冲突；410 草稿过期；413 文件过大；429 登录或咨询限流；503 模型相关操作不可用。CORS 框架拒绝可能是纯文本 403。
+常规错误体为 `{"code":400,"message":"说明","data":null}`（code 与实际 HTTP 错误码一致）。400 参数不合法；401 未登录；403 角色/CSRF/Origin 不允许；404 无资源或不属于本人；409 版本/状态/幂等冲突；410 草稿过期；413 文件过大；429 登录或咨询限流；503 模型相关操作不可用。CORS 框架拒绝可能是纯文本 403。
 
 网络超时后不要生成新幂等键立即重发写操作；先检查工单或会话，再使用原始键核对。SSE 已开始后，业务失败通过 `event:error` 返回，前端不可将其当作成功结果。

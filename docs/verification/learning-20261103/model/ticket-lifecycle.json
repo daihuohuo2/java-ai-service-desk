@@ -1,0 +1,134 @@
+{
+  "id": "confirmed-ticket-lifecycle",
+  "pass": true,
+  "ticket": {
+    "assignee_id": "agent",
+    "assignee_name": "顾青 · 客服",
+    "created_at": "2026-11-03T13:17:38.406834800Z",
+    "customer_name": "陈一诺",
+    "description": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+    "events": [
+      {
+        "actor_id": "customer",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER",
+        "content": "我要为订单 ZS20261030001 申请退货退款，商品未使用，包装完好。",
+        "created_at": "2026-11-03T13:17:38.408296900Z",
+        "event_type": "CREATED",
+        "id": "cb56fc67-dda5-44b2-93b1-a88c8b0bafe2",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "已接单，正在核实演示售后申请。",
+        "created_at": "2026-11-03T13:17:38.954428Z",
+        "event_type": "REPLY",
+        "id": "396a55d2-31f5-43fc-b8ad-3d4bd7420be2",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "OPEN → IN_PROGRESS",
+        "created_at": "2026-11-03T13:17:38.954428Z",
+        "event_type": "STATUS",
+        "id": "87fd81f6-bbfa-4220-86f5-1ebdf266a16f",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "请确认包装和配件是否齐全。",
+        "created_at": "2026-11-03T13:17:38.968141400Z",
+        "event_type": "REPLY",
+        "id": "5ed97f65-eb7d-41a8-99ec-41f8f9a077da",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "IN_PROGRESS → WAITING_CUSTOMER",
+        "created_at": "2026-11-03T13:17:38.968141400Z",
+        "event_type": "STATUS",
+        "id": "850f3208-e41c-4da9-9443-02b6860c6a9d",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "customer",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER",
+        "content": "包装和配件齐全，商品未使用。",
+        "created_at": "2026-11-03T13:17:38.980503400Z",
+        "event_type": "REPLY",
+        "id": "80d287f6-ee6b-439a-a6e5-4e5155b5372b",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "customer",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER",
+        "content": "WAITING_CUSTOMER → IN_PROGRESS",
+        "created_at": "2026-11-03T13:17:38.981018900Z",
+        "event_type": "STATUS",
+        "id": "686f28b9-1c02-42a4-bdb1-427de326889a",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "已提供后续寄回与审核流程，演示服务已完成；未执行真实退款。",
+        "created_at": "2026-11-03T13:17:38.994442400Z",
+        "event_type": "REPLY",
+        "id": "704357e9-da7c-44e8-8e33-40cb0e2b4d70",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "agent",
+        "actor_name": "顾青 · 客服",
+        "actor_role": "AGENT",
+        "content": "IN_PROGRESS → RESOLVED",
+        "created_at": "2026-11-03T13:17:38.995462200Z",
+        "event_type": "STATUS",
+        "id": "881f0bc3-71d6-4496-91b0-370d381ccb3a",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "customer",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER",
+        "content": "已了解处理流程，确认关闭。",
+        "created_at": "2026-11-03T13:17:39.007745700Z",
+        "event_type": "REPLY",
+        "id": "0b773cd9-9767-4cff-b0d6-e7477acdc5ad",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      },
+      {
+        "actor_id": "customer",
+        "actor_name": "陈一诺",
+        "actor_role": "CUSTOMER",
+        "content": "RESOLVED → CLOSED",
+        "created_at": "2026-11-03T13:17:39.007745700Z",
+        "event_type": "STATUS",
+        "id": "4124f5f0-2dc5-419c-951a-6c81152c39d2",
+        "ticket_id": "3a12eb57-27c7-4b1f-9022-0199e277814d"
+      }
+    ],
+    "id": "3a12eb57-27c7-4b1f-9022-0199e277814d",
+    "kind": "REFUND",
+    "order_id": "order-1",
+    "order_no": "ZS20261030001",
+    "owner_id": "customer",
+    "product_name": "栖光阅读灯",
+    "status": "CLOSED",
+    "subject": "售后处理申请",
+    "ticket_no": "TK-856B11B4",
+    "updated_at": "2026-11-03T13:17:39.006729200Z",
+    "version": 5
+  }
+}

@@ -5,12 +5,18 @@ from hashlib import sha256
 import json
 import argparse
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--name',default='java-ai-service-desk-fullstack-20261102.zip')
+parser.add_argument('--name',default='java-ai-service-desk-learning-20261103.zip')
+parser.add_argument('--history-bundle',type=Path,help='Optional verified local Git bundle to include in the delivery')
 args=parser.parse_args()
 if Path(args.name).name!=args.name or not args.name.endswith('.zip'):
     parser.error('--name must be a ZIP filename without directory components')
 root=Path(__file__).resolve().parents[1]
 files=[]
+if args.history_bundle:
+    bundle=args.history_bundle.resolve()
+    if not bundle.is_relative_to(root) or not bundle.is_file() or bundle.suffix!='.bundle':
+        parser.error('--history-bundle must be an existing .bundle file inside the project')
+    files.append(bundle)
 excluded={'docs/verification/containers.json','docs/verification/start-script.txt',
           'docs/verification/boot-upgrade-20261031/jar-sha256.json',
           'docs/verification/boot-upgrade-20261031/vscode-zero-problems.png'}
@@ -20,7 +26,7 @@ for directory in ('backend/desk-common/src','backend/desk-domain/src','backend/d
                  and p.relative_to(root).as_posix() not in excluded)
 files.extend(root.glob('compose*.yaml'))
 files.extend(root/name for name in ('frontend/playwright.config.ts','backend/.dockerignore','frontend/.dockerignore'))
-for name in ('README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY.md','.gitattributes','.gitignore','.env.example','compose.yaml','compose.models.yaml','compose.gpu.yaml','backend/pom.xml','backend/desk-common/pom.xml','backend/desk-domain/pom.xml','backend/desk-app/pom.xml','backend/mvnw','backend/mvnw.cmd','backend/Dockerfile','backend/desk-app/target/service-desk-1.0.0.jar','frontend/package.json','frontend/package-lock.json','frontend/index.html','frontend/tsconfig.json','frontend/vite.config.ts','frontend/Dockerfile','frontend/nginx.conf'):
+for name in ('README.md','LICENSE','CONTRIBUTING.md','THIRD_PARTY.md','.gitattributes','.gitignore','.editorconfig','.env.example','compose.yaml','compose.models.yaml','compose.gpu.yaml','backend/pom.xml','backend/desk-common/pom.xml','backend/desk-domain/pom.xml','backend/desk-app/pom.xml','backend/mvnw','backend/mvnw.cmd','backend/Dockerfile','backend/desk-app/target/service-desk-1.0.0.jar','frontend/package.json','frontend/package-lock.json','frontend/index.html','frontend/tsconfig.json','frontend/vite.config.ts','frontend/Dockerfile','frontend/nginx.conf'):
     path=root/name
     if not path.is_file():raise SystemExit('Missing required delivery file: '+name)
     files.append(path)

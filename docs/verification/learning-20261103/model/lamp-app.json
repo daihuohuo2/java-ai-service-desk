@@ -1,0 +1,28 @@
+{
+  "id": "lamp-app",
+  "question": "栖光阅读灯可以连接 App 吗？",
+  "pass": true,
+  "latencyMs": 585,
+  "result": {
+    "answer": "根据目前已发布的资料：\n\n[1] 栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+    "citations": [
+      {
+        "id": "b46cf2c2-269f-457e-b8dd-e99404ca0b04",
+        "title": "栖光阅读灯使用说明",
+        "version": 1,
+        "ordinal": 2,
+        "content": "栖光阅读灯支持三档色温和触控调光。长按触控区域调节亮度，短按切换开关。设备无 App 连接功能。",
+        "score": 1.086,
+        "retrieval": "hybrid"
+      }
+    ],
+    "intent": "KNOWLEDGE",
+    "latencyMs": 570,
+    "mode": "OLLAMA",
+    "orders": null,
+    "promptVersion": "planner-v2-short-refs",
+    "proposal": null,
+    "runId": "c1f9843f-2538-4b05-bf85-d88754e2b839",
+    "tool": "knowledge.search"
+  }
+}

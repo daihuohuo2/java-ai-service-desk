@@ -1,0 +1,32 @@
+[INFO]   from desk-common\pom.xml
+[INFO]   from desk-domain\pom.xml
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.142 s -- in cn.liuyang.desk.domain.DtoValidationTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.211 s -- in cn.liuyang.desk.domain.TicketPolicyTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO]   from desk-app\pom.xml
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.433 s -- in cn.liuyang.desk.ai.AiGatewayTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.70 s -- in cn.liuyang.desk.cache.MiddlewareIntegrationTest
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.550 s -- in cn.liuyang.desk.DeskIntegrationTest
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.503 s -- in cn.liuyang.desk.FullstackIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.069 s -- in cn.liuyang.desk.RedisCatalogCacheTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in cn.liuyang.desk.service.GroundingTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.734 s -- in cn.liuyang.desk.service.OrderServiceTest
+[INFO] Tests run: 96, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time:  01:07 min
+[INFO]   from desk-common\pom.xml
+[INFO]   from desk-domain\pom.xml
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.916 s -- in cn.liuyang.desk.domain.DtoValidationTest
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.203 s -- in cn.liuyang.desk.domain.TicketPolicyTest
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO]   from desk-app\pom.xml
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.958 s -- in cn.liuyang.desk.ai.AiGatewayTest
+[WARNING] Tests run: 3, Failures: 0, Errors: 0, Skipped: 3, Time elapsed: 0.002 s -- in cn.liuyang.desk.cache.MiddlewareIntegrationTest
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.12 s -- in cn.liuyang.desk.DeskIntegrationTest
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.003 s -- in cn.liuyang.desk.FullstackIntegrationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.412 s -- in cn.liuyang.desk.RedisCatalogCacheTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in cn.liuyang.desk.service.GroundingTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.290 s -- in cn.liuyang.desk.service.OrderServiceTest
+[INFO] Tests run: 96, Failures: 0, Errors: 0, Skipped: 3
+[INFO] BUILD SUCCESS
+[INFO] Total time:  47.676 s

@@ -26,7 +26,7 @@ cd java-ai-service-desk
 .\scripts\start.ps1 -ManagedModels -Gpu
 ```
 
-从 GitHub 克隆后必须先 build；源码仓库不包含编译产物。只有自行生成、已含 `backend/target/service-desk-1.0.0.jar` 和 `frontend/dist` 的交付包才可省略 build。`init-env.ps1` 只在 `.env` 不存在时生成随机数据库密码，不覆盖现有配置。默认只绑定 `127.0.0.1:19082`，数据库和 Java 端口不对外发布。
+从 GitHub 克隆后必须先 build；源码仓库不包含编译产物。只有自行生成、已含 `backend/desk-app/target/service-desk-1.0.0.jar` 和 `frontend/dist` 的交付包才可省略 build。`init-env.ps1` 只在 `.env` 不存在时生成随机数据库密码，不覆盖现有配置。默认只绑定 `127.0.0.1:19082`，数据库和 Java 端口不对外发布。
 
 `-ManagedModels` 创建本项目独立 `desk-models` 卷并下载两个模型，不依赖旧项目。无 NVIDIA GPU 则省略 `-Gpu`。本机验收另用 `java-ai-service-desk-ollama` 模型容器，只读复用已有权重，通过 `.env` 的 `OLLAMA_URL=http://host.docker.internal:28434` 接入；重新拉起当前环境用 `scripts/start.ps1`，不需要同时启动第二个模型服务。
 

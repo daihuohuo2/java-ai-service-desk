@@ -1,0 +1,28 @@
+{
+  "id": "policy-not-action",
+  "question": "我只是问退货政策，不要替我提交任何申请",
+  "pass": true,
+  "latencyMs": 1048,
+  "result": {
+    "answer": "根据目前已发布的资料：\n\n[1] 签收后 7 天内，商品未使用且包装、配件完好，可申请七天无理由退货。定制商品和已拆封的个人卫生类商品不适用。是否通过以人工审核为准。",
+    "citations": [
+      {
+        "id": "024b103f-112c-4eb7-83e2-d59f94bacc33",
+        "title": "售后与退换货规则",
+        "version": 1,
+        "ordinal": 1,
+        "content": "签收后 7 天内，商品未使用且包装、配件完好，可申请七天无理由退货。定制商品和已拆封的个人卫生类商品不适用。是否通过以人工审核为准。",
+        "score": 0.501,
+        "retrieval": "hybrid"
+      }
+    ],
+    "intent": "KNOWLEDGE",
+    "latencyMs": 1031,
+    "mode": "OLLAMA",
+    "orders": null,
+    "promptVersion": "planner-v2-short-refs",
+    "proposal": null,
+    "runId": "9bd5ccd0-aeb1-4c03-b3b8-27bab2593350",
+    "tool": "knowledge.search"
+  }
+}
