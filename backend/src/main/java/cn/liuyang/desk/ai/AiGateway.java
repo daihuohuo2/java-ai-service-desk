@@ -1,5 +1,6 @@
 package cn.liuyang.desk.ai;
 
+import cn.liuyang.desk.dto.*;
 import cn.liuyang.desk.service.TicketService;
 import java.util.*;
 import java.util.concurrent.*;
@@ -54,24 +55,27 @@ public class AiGateway {
     this.json = json;
   }
 
-  public Plan plan(String question, List<String> history, List<Map<String, Object>> candidates) {
+  public Plan plan(String question, List<String> history, List<KnowledgeHit> candidates) {
     if (!enabled) return fallback(question, "RETRIEVAL_ONLY");
     try {
       // Short, request-local references avoid asking the model to copy UUIDs.
       var referenceIds = new LinkedHashMap<String, String>();
-      var promptCandidates = new ArrayList<Map<String, Object>>();
+      var promptCandidates = new ArrayList<KnowledgeHit>();
       for (int i = 0; i < candidates.size(); i++) {
         var candidate = candidates.get(i);
         String reference = "S" + (i + 1);
-        referenceIds.put(reference, (String) candidate.get("id"));
-        var promptCandidate = new LinkedHashMap<String, Object>(candidate);
-        promptCandidate.put("id", reference);
-        promptCandidates.add(promptCandidate);
+        referenceIds.put(reference, candidate.id());
+        promptCandidates.add(
+            new KnowledgeHit(
+                reference,
+                candidate.title(),
+                candidate.version(),
+                candidate.ordinal(),
+                candidate.content(),
+                candidate.score(),
+                candidate.retrieval()));
       }
-      var payload = new LinkedHashMap<String, Object>();
-      payload.put("question", question);
-      payload.put("history", history);
-      payload.put("candidates", promptCandidates);
+      var payload = new PromptInput(question, history, promptCandidates);
       String input = json.writeValueAsString(payload);
       String text =
           bounded(

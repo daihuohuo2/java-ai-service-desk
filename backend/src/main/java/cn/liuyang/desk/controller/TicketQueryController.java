@@ -3,7 +3,6 @@ package cn.liuyang.desk.controller;
 import cn.liuyang.desk.common.PageResponse;
 import cn.liuyang.desk.security.Actor;
 import cn.liuyang.desk.service.TicketQueryService;
-import java.util.Map;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class TicketQueryController {
   }
 
   @GetMapping("/page")
-  public PageResponse<Map<String, Object>> page(
+  public PageResponse<cn.liuyang.desk.dto.TicketSummary> page(
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(defaultValue = "10") int size,
       @RequestParam(required = false) String status,

@@ -8,7 +8,8 @@ import org.apache.ibatis.annotations.Select;
 
 /** MyBatis binds values with #{...}; user input never becomes SQL syntax. */
 @Mapper
-public interface OrderMapper {
+public interface OrderMapper
+    extends com.baomidou.mybatisplus.core.mapper.BaseMapper<cn.liuyang.desk.entity.Order> {
   String COLUMNS =
       "o.id,o.order_no,o.owner_id,o.product_id,o.quantity,o.total_cents,"
           + "o.status,o.created_at,o.delivered_at,p.name product_name,p.category";

@@ -355,6 +355,7 @@ class FullstackIntegrationTest {
     assertEquals("RUNNING", jobs.get(job.id()).state());
     assertEquals(
         "new-worker-token",
-        store.one("SELECT lease_token FROM index_jobs WHERE id=?", job.id()).get("lease_token"));
+        store.db.queryForObject(
+            "SELECT lease_token FROM index_jobs WHERE id=?", String.class, job.id()));
   }
 }

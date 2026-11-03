@@ -1,63 +1,46 @@
 package cn.liuyang.desk.repository;
 
 import cn.liuyang.desk.common.ApiException;
+import cn.liuyang.desk.converter.DeskConverter;
 import cn.liuyang.desk.dto.ProductResponse;
+import cn.liuyang.desk.entity.Product;
+import cn.liuyang.desk.mapper.ProductMapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-/** JDBC is retained here to compare it with OrderMapper/MyBatis. */
+/** Product CRUD uses MyBatis-Plus; the shared cache revision uses explicit atomic SQL. */
 @Repository
+@RequiredArgsConstructor
 public class ProductRepository {
+  private final ProductMapper mapper;
+  private final DeskConverter converter;
   private final JdbcTemplate db;
-  private static final RowMapper<ProductResponse> MAPPER =
-      (row, index) ->
-          new ProductResponse(
-              row.getString("id"),
-              row.getString("name"),
-              row.getString("category"),
-              row.getLong("price_cents"),
-              row.getString("description"),
-              row.getBoolean("active"));
-
-  public ProductRepository(JdbcTemplate db) {
-    this.db = db;
-  }
 
   public List<ProductResponse> list(boolean includeInactive) {
-    return db.query(
-        "SELECT * FROM products " + (includeInactive ? "" : "WHERE active=true ") + "ORDER BY id",
-        MAPPER);
+    var query = new LambdaQueryWrapper<Product>();
+    query.eq(!includeInactive, Product::isActive, true).orderByAsc(Product::getId);
+    return mapper.selectList(query).stream().map(converter::product).toList();
   }
 
   public ProductResponse get(String id) {
-    return db.query("SELECT * FROM products WHERE id=?", MAPPER, id).stream()
-        .findFirst()
-        .orElseThrow(ApiException::missing);
+    Product product = mapper.selectById(id);
+    if (product == null) {
+      throw ApiException.missing();
+    }
+    return converter.product(product);
   }
 
   public void insert(ProductResponse product) {
-    db.update(
-        "INSERT INTO products(id,name,category,price_cents,description,active) VALUES(?,?,?,?,?,?)",
-        product.id(),
-        product.name(),
-        product.category(),
-        product.priceCents(),
-        product.description(),
-        product.active());
+    mapper.insert(converter.productEntity(product));
   }
 
   public void update(ProductResponse product) {
-    if (db.update(
-            "UPDATE products SET name=?,category=?,price_cents=?,description=?,active=? WHERE id=?",
-            product.name(),
-            product.category(),
-            product.priceCents(),
-            product.description(),
-            product.active(),
-            product.id())
-        != 1) throw ApiException.missing();
+    if (mapper.updateById(converter.productEntity(product)) != 1) {
+      throw ApiException.missing();
+    }
   }
 
   public long revision() {

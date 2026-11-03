@@ -27,12 +27,6 @@ public class Store {
     return Instant.now().toString();
   }
 
-  public Map<String, Object> one(String sql, Object... args) {
-    var rows = db.queryForList(sql, args);
-    if (rows.isEmpty()) throw ApiException.missing();
-    return rows.getFirst();
-  }
-
   public String encode(Object o) {
     try {
       return json.writeValueAsString(o);
@@ -41,12 +35,22 @@ public class Store {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  public Map<String, Object> decode(String s) {
-    try {
-      return json.readValue(s, Map.class);
-    } catch (Exception e) {
-      throw new IllegalStateException(e);
+  public <T> T decode(String source, Class<T> type) {
+    return json.readValue(source, type);
+  }
+
+  public <T> List<T> list(String sql, Class<T> type, Object... args) {
+    return db.query(
+        sql, org.springframework.jdbc.core.BeanPropertyRowMapper.newInstance(type), args);
+  }
+
+  public <T> T one(String sql, Class<T> type, Object... args) {
+    return list(sql, type, args).stream().findFirst().orElseThrow(ApiException::missing);
+  }
+
+  public void require(String sql, Object... args) {
+    if (db.queryForList(sql, String.class, args).isEmpty()) {
+      throw ApiException.missing();
     }
   }
 

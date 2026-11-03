@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import cn.liuyang.desk.ai.AiGateway;
-import cn.liuyang.desk.cache.RedisCatalogCache;
 import cn.liuyang.desk.config.IndexQueueConfiguration;
 import cn.liuyang.desk.dto.ProductInput;
 import cn.liuyang.desk.jobs.IndexJobDispatcher;
