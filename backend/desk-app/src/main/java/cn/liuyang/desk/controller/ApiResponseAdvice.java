@@ -14,17 +14,22 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RestControllerAdvice(basePackages = "cn.liuyang.desk.controller")
 public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
   @Override
-  public boolean supports(MethodParameter returnType,
-      Class<? extends HttpMessageConverter<?>> converterType) {
+  public boolean supports(
+      MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
     return !SseEmitter.class.isAssignableFrom(returnType.getParameterType());
   }
 
   @Override
-  public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType contentType,
+  public Object beforeBodyWrite(
+      Object body,
+      MethodParameter returnType,
+      MediaType contentType,
       Class<? extends HttpMessageConverter<?>> converterType,
-      ServerHttpRequest request, ServerHttpResponse response) {
-    if (body == null || body instanceof ApiResponse<?> ||
-        !MediaType.APPLICATION_JSON.isCompatibleWith(contentType)) {
+      ServerHttpRequest request,
+      ServerHttpResponse response) {
+    if (body == null
+        || body instanceof ApiResponse<?>
+        || !MediaType.APPLICATION_JSON.isCompatibleWith(contentType)) {
       return body;
     }
     return ApiResponse.success(body);

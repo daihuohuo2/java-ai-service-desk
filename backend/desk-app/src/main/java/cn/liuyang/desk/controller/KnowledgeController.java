@@ -44,8 +44,11 @@ public class KnowledgeController {
       @RequestParam MultipartFile file)
       throws Exception {
     String name = Objects.toString(file.getOriginalFilename(), "").toLowerCase(Locale.ROOT);
-    if (title.isBlank() || title.length() > 120 || !(name.endsWith(".txt") || name.endsWith(".md")))
+    if (title.isBlank()
+        || title.length() > 120
+        || !(name.endsWith(".txt") || name.endsWith(".md"))) {
       throw new ApiException(400, "请选择 UTF-8 编码的 .txt 或 .md 文件，并填写标题");
+    }
     String content;
     try {
       content =

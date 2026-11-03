@@ -9,18 +9,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Actor {
-  private final Store s;
+  private final Store store;
 
-  public Actor(Store s) {
-    this.s = s;
+  public Actor(Store store) {
+    this.store = store;
   }
 
   public UserResponse current() {
     var auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName()))
+    if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
       throw new ApiException(401, "请先登录");
+    }
     User user =
-        s.one(
+        store.one(
             "SELECT id,username,display_name,role FROM app_users WHERE username=?",
             User.class,
             auth.getName());

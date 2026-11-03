@@ -1,6 +1,7 @@
+import type { TicketSummary, TicketDetail, Order } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import { Plus, ChevronRight, Search } from "lucide-react";
-import { api, post, Row } from "../api";
+import { api, post } from "../api";
 import {
   statusName,
   kindName,
@@ -24,12 +25,12 @@ export function Tickets({
   staff: boolean;
   onToast: (s: string) => void;
 }) {
-  const [rows, setRows] = useState<Row[] | null>(null);
+  const [rows, setRows] = useState<TicketSummary[] | null>(null);
   const [filter, setFilter] = useState("ALL");
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Row | null>(null);
+  const [selected, setSelected] = useState<TicketDetail | null>(null);
   const [create, setCreate] = useState(false);
-  const [orders, setOrders] = useState<Row[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [message, setMessage] = useState("");
   const [next, setNext] = useState("");
   const [busy, setBusy] = useState(false);
@@ -48,7 +49,9 @@ export function Tickets({
         status: filter === "ALL" ? "" : filter,
         query,
       });
-      const result = await api<PageResult<Row>>("/tickets/page?" + search);
+      const result = await api<PageResult<TicketSummary>>(
+        "/tickets/page?" + search,
+      );
       if (current !== sequence.current) return;
       setRows(result.items);
       setTotal(result.total);
@@ -69,13 +72,13 @@ export function Tickets({
     };
   }, [page, size, filter, query]);
   useEffect(() => {
-    api("/orders")
+    api<Order[]>("/orders")
       .then(setOrders)
       .catch(() => {});
   }, []);
   async function select(id: string) {
     try {
-      const t = await api("/tickets/" + id);
+      const t = await api<TicketDetail>("/tickets/" + id);
       setSelected(t);
       setNext(t.status);
       setMessage("");
@@ -240,7 +243,7 @@ export function Tickets({
             </p>
           </div>
           <div className="timeline">
-            {selected.events.map((e: Row) => (
+            {selected.events.map((e) => (
               <div
                 key={e.id}
                 className={"timeline-event " + e.event_type.toLowerCase()}
@@ -268,11 +271,14 @@ export function Tickets({
                 e.preventDefault();
                 setBusy(true);
                 try {
-                  const t = await post("/tickets/" + selected.id + "/events", {
-                    version: selected.version,
-                    status: next,
-                    message,
-                  });
+                  const t = await post<TicketDetail>(
+                    "/tickets/" + selected.id + "/events",
+                    {
+                      version: selected.version,
+                      status: next,
+                      message,
+                    },
+                  );
                   setSelected(t);
                   setNext(t.status);
                   setMessage("");

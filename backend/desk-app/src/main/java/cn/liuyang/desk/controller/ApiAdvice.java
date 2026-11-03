@@ -29,10 +29,13 @@ public class ApiAdvice {
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  ResponseEntity<ApiResponse<Map<String, String>>> validation(MethodArgumentNotValidException exception) {
+  ResponseEntity<ApiResponse<Map<String, String>>> validation(
+      MethodArgumentNotValidException exception) {
     Map<String, String> fields = new LinkedHashMap<>();
-    exception.getBindingResult().getFieldErrors().forEach(error ->
-        fields.putIfAbsent(error.getField(), error.getDefaultMessage()));
+    exception
+        .getBindingResult()
+        .getFieldErrors()
+        .forEach(error -> fields.putIfAbsent(error.getField(), error.getDefaultMessage()));
     return ResponseEntity.badRequest().body(new ApiResponse<>(400, "输入格式不正确，请检查必填项和长度", fields));
   }
 

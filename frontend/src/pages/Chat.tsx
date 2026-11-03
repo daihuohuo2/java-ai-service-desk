@@ -1,3 +1,9 @@
+import type {
+  ChatThread,
+  ChatMessage,
+  TicketDetail,
+  Proposal as ProposalData,
+} from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import {
   MessageSquare,
@@ -16,7 +22,7 @@ import {
   Headphones,
   Loader2,
 } from "lucide-react";
-import { api, post, askStream, Row } from "../api";
+import { api, post, askStream } from "../api";
 import { kindName, money, date, Badge, PageTitle } from "../components/ui";
 
 export function Chat({
@@ -26,15 +32,15 @@ export function Chat({
   onToast: (s: string) => void;
   go: (s: string) => void;
 }) {
-  const [threads, setThreads] = useState<Row[]>([]);
+  const [threads, setThreads] = useState<ChatThread[]>([]);
   const [current, setCurrent] = useState("");
-  const [messages, setMessages] = useState<Row[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [phase, setPhase] = useState("");
   const [history, setHistory] = useState(false);
   const end = useRef<HTMLDivElement>(null);
-  const loadThreads = () => api<Row[]>("/chat/threads").then(setThreads);
+  const loadThreads = () => api<ChatThread[]>("/chat/threads").then(setThreads);
   useEffect(() => {
     loadThreads().catch((e) => onToast(e.message));
   }, []);
@@ -49,7 +55,7 @@ export function Chat({
     let id = current;
     try {
       if (!id) {
-        id = (await post("/chat/threads")).id;
+        id = (await post<ChatThread>("/chat/threads")).id;
         setCurrent(id);
       }
       setMessages((x) => [...x, { role: "user", content: value }]);
@@ -62,7 +68,7 @@ export function Chat({
     } catch (e) {
       onToast((e as Error).message);
       if (id)
-        api<Row[]>("/chat/threads/" + id + "/messages")
+        api<ChatMessage[]>("/chat/threads/" + id + "/messages")
           .then(setMessages)
           .catch(() => {});
     } finally {
@@ -72,7 +78,9 @@ export function Chat({
   }
   async function open(id: string) {
     try {
-      setMessages(await api("/chat/threads/" + id + "/messages"));
+      setMessages(
+        await api<ChatMessage[]>("/chat/threads/" + id + "/messages"),
+      );
       setCurrent(id);
       setHistory(false);
     } catch (e) {
@@ -192,9 +200,9 @@ export function Chat({
                       )}
                     </div>
                     <div className="message-body">{m.content}</div>
-                    {m.detail?.citations?.length > 0 && (
+                    {m.detail && m.detail.citations.length > 0 && (
                       <div className="citations">
-                        {m.detail.citations.map((c: Row, j: number) => (
+                        {m.detail.citations.map((c, j) => (
                           <details key={c.id}>
                             <summary>
                               <FileText size={13} />[{j + 1}] {c.title}
@@ -205,7 +213,7 @@ export function Chat({
                         ))}
                       </div>
                     )}
-                    {m.detail?.orders?.map((o: Row) => (
+                    {m.detail?.orders?.map((o) => (
                       <div className="inline-order" key={o.id}>
                         <div>
                           <strong>{o.product_name}</strong>
@@ -344,12 +352,12 @@ function Proposal({
   onToast,
   go,
 }: {
-  data: Row;
+  data: ProposalData;
   onToast: (s: string) => void;
   go: (s: string) => void;
 }) {
   const [busy, setBusy] = useState(false);
-  const [ticket, setTicket] = useState<Row | null>(null);
+  const [ticket, setTicket] = useState<TicketDetail | null>(null);
   return (
     <div className="proposal">
       <div>
@@ -370,7 +378,9 @@ function Proposal({
           onClick={async () => {
             setBusy(true);
             try {
-              setTicket(await post("/proposals/" + data.id + "/confirm"));
+              setTicket(
+                await post<TicketDetail>("/proposals/" + data.id + "/confirm"),
+              );
               onToast("工单已创建，客服将继续跟进");
             } catch (e) {
               onToast((e as Error).message);

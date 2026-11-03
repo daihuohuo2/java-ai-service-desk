@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatServiceImpl implements ChatService {
   private final ChatRepository repository;
-  private final Store s;
+  private final Store store;
   private final AiGateway ai;
   private final KnowledgeService knowledge;
   private final OrderService orders;
@@ -26,14 +26,14 @@ public class ChatServiceImpl implements ChatService {
 
   public ChatServiceImpl(
       ChatRepository repository,
-      Store s,
+      Store store,
       AiGateway ai,
       KnowledgeService knowledge,
       OrderService orders,
       TicketService tickets,
       cn.liuyang.desk.converter.DeskConverter converter) {
     this.repository = repository;
-    this.s = s;
+    this.store = store;
     this.ai = ai;
     this.knowledge = knowledge;
     this.orders = orders;
@@ -62,7 +62,7 @@ public class ChatServiceImpl implements ChatService {
             message -> {
               ChatMessageResponse response = converter.message(message);
               if (message.getDetailJson() != null) {
-                response.setDetail(s.decode(message.getDetailJson(), ChatAnswer.class));
+                response.setDetail(store.decode(message.getDetailJson(), ChatAnswer.class));
               }
               return response;
             })
@@ -71,8 +71,12 @@ public class ChatServiceImpl implements ChatService {
 
   public ChatAnswer answer(String owner, String thread, String question, String key) {
     ownThread(owner, thread);
-    if (key == null || !key.matches("[A-Za-z0-9-]{8,70}")) throw new ApiException(400, "缺少有效的请求标识");
-    if (!active.add(owner)) throw new ApiException(429, "上一条咨询仍在处理中，请稍候");
+    if (key == null || !key.matches("[A-Za-z0-9-]{8,70}")) {
+      throw new ApiException(400, "缺少有效的请求标识");
+    }
+    if (!active.add(owner)) {
+      throw new ApiException(429, "上一条咨询仍在处理中，请稍候");
+    }
     long started = System.currentTimeMillis();
     String runId = Store.id();
     boolean inserted = false;
@@ -80,9 +84,12 @@ public class ChatServiceImpl implements ChatService {
       var existing = repository.findRun(owner + ":" + key);
       if (!existing.isEmpty()) {
         var run = existing.getFirst();
-        if (!thread.equals(run.getThreadId()) || !question.equals(run.getQuestion()))
+        if (!thread.equals(run.getThreadId()) || !question.equals(run.getQuestion())) {
           throw new ApiException(409, "同一请求标识不能用于不同问题");
-        if (run.getResultJson() != null) return s.decode(run.getResultJson(), ChatAnswer.class);
+        }
+        if (run.getResultJson() != null) {
+          return store.decode(run.getResultJson(), ChatAnswer.class);
+        }
         throw new ApiException(409, "该请求尚无确定结果，请查看会话记录后重新提问");
       }
       repository.insertRun(runId, owner, thread, owner + ":" + key, question);
@@ -114,7 +121,9 @@ public class ChatServiceImpl implements ChatService {
           }
         }
         case "AFTER_SALES", "HUMAN" -> {
-          if (!"OLLAMA".equals(plan.mode())) throw new ApiException(503, "模型不可用，请使用手动创建工单");
+          if (!"OLLAMA".equals(plan.mode())) {
+            throw new ApiException(503, "模型不可用，请使用手动创建工单");
+          }
           String kind = "HUMAN".equals(plan.intent()) ? "QUESTION" : plan.kind();
           try {
             var proposal =
@@ -135,9 +144,9 @@ public class ChatServiceImpl implements ChatService {
           var chosen = selectSources(sources, plan.sourceIds(), !"OLLAMA".equals(plan.mode()));
           result.setCitations(chosen);
           result.setTool("knowledge.search");
-          if (chosen.isEmpty())
+          if (chosen.isEmpty()) {
             result.setAnswer("现有资料不足以确认这个问题。我不会推测未提供的产品参数或售后承诺。您可以补充商品名称，或创建人工咨询工单。");
-          else {
+          } else {
             StringBuilder answer = new StringBuilder("根据目前已发布的资料：\n\n");
             for (int i = 0; i < chosen.size(); i++)
               answer
@@ -151,12 +160,14 @@ public class ChatServiceImpl implements ChatService {
         }
       }
       result.setLatencyMs(System.currentTimeMillis() - started);
-      repository.insertAnswer(thread, result.getAnswer(), s.encode(result));
-      repository.completeRun(s.encode(result), plan.mode(), result.getLatencyMs(), runId);
-      s.audit(owner, "CHAT_COMPLETE", runId, plan.intent() + " / " + plan.mode());
+      repository.insertAnswer(thread, result.getAnswer(), store.encode(result));
+      repository.completeRun(store.encode(result), plan.mode(), result.getLatencyMs(), runId);
+      store.audit(owner, "CHAT_COMPLETE", runId, plan.intent() + " / " + plan.mode());
       return result;
     } catch (RuntimeException e) {
-      if (inserted) repository.failRun(System.currentTimeMillis() - started, runId);
+      if (inserted) {
+        repository.failRun(System.currentTimeMillis() - started, runId);
+      }
       throw e;
     } finally {
       active.remove(owner);

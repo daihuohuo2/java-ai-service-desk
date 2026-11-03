@@ -14,14 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+  // 保存数据库访问依赖；构造器执行后，这个引用不会再被替换。
   private final OrderMapper orders;
   private static final Set<String> STATUSES = Set.of("PAID", "SHIPPED", "DELIVERED", "CANCELLED");
 
   public OrderServiceImpl(OrderMapper orders) {
+    // this.orders 是字段，右边的 orders 是 Spring 传入的构造参数。
     this.orders = orders;
   }
 
   public List<OrderResponse> list(String owner) {
+    // owner 来自登录用户，不允许浏览器指定其他客户的 ID。
     return orders.list(owner);
   }
 
@@ -40,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
         query == null || query.isBlank()
             ? null
             : "%" + query.trim().replace("!", "!!").replace("%", "!%").replace("_", "!_") + "%";
+    // 先统计，再查这一页；两个查询使用相同的归属与筛选条件。
     long total = orders.count(owner, status, pattern);
     var rows = orders.page(owner, status, pattern, size, (long) (page - 1) * size);
     return PageResponse.of(rows, total, page, size);

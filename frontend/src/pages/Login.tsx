@@ -1,3 +1,4 @@
+import type { User } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import {
   MessageSquare,
@@ -7,13 +8,13 @@ import {
   Headphones,
   Loader2,
 } from "lucide-react";
-import { post, refreshCsrf, Row } from "../api";
+import { post, refreshCsrf } from "../api";
 
 export function Login({
   onLogin,
   demo,
 }: {
-  onLogin: (u: Row) => void;
+  onLogin: (u: User) => void;
   demo: boolean;
 }) {
   const [username, setUsername] = useState(demo ? "customer" : "");
@@ -26,7 +27,7 @@ export function Login({
     setError("");
     try {
       await refreshCsrf();
-      const u = await post("/auth/login", { username, password });
+      const u = await post<User>("/auth/login", { username, password });
       await refreshCsrf();
       onLogin(u);
     } catch (e) {

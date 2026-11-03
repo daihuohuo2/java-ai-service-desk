@@ -1,11 +1,11 @@
-export type Row = Record<string, any>;
+import type { ChatAnswer } from "./types";
 let csrf = "";
 export async function refreshCsrf() {
   const r = await fetch("/api/auth/csrf", { credentials: "include" });
   if (!r.ok) throw new Error("无法连接服务");
   csrf = (await r.json()).data.token;
 }
-export async function api<T = any>(
+export async function api<T = unknown>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
@@ -29,8 +29,12 @@ export async function api<T = any>(
   if (!r.ok || data.code !== 0) throw new Error(data.message || "请求失败");
   return data.data as T;
 }
-export const post = (path: string, body: any = {}, key?: string) =>
-  api(path, {
+export const post = <T = void>(
+  path: string,
+  body: unknown = {},
+  key?: string,
+) =>
+  api<T>(path, {
     method: "POST",
     body: JSON.stringify(body),
     headers: key ? { "Idempotency-Key": key } : {},
@@ -40,7 +44,7 @@ export async function askStream(
   question: string,
   onPhase: (s: string) => void,
   key: string,
-): Promise<Row> {
+): Promise<ChatAnswer> {
   if (!csrf) await refreshCsrf();
   const r = await fetch("/api/chat/stream", {
     method: "POST",
@@ -59,7 +63,7 @@ export async function askStream(
   const reader = r.body?.getReader();
   if (!reader) throw new Error("无法读取回复");
   let buffer = "",
-    result: Row | undefined;
+    result: ChatAnswer | undefined;
   const decoder = new TextDecoder();
   while (true) {
     const { value, done } = await reader.read();

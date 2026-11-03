@@ -22,7 +22,9 @@ public final class CsvExport {
     if (!leading.isEmpty() && "=+-@".indexOf(leading.charAt(0)) >= 0
         || text.startsWith("\t")
         || text.startsWith("\r")
-        || text.startsWith("\n")) text = "'" + text;
+        || text.startsWith("\n")) {
+      text = "'" + text;
+    }
     return "\"" + text.replace("\"", "\"\"") + "\"";
   }
 }

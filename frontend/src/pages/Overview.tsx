@@ -1,3 +1,4 @@
+import type { OverviewData, TicketSummary } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import {
   Ticket,
@@ -7,7 +8,7 @@ import {
   Activity,
   CheckCircle2,
 } from "lucide-react";
-import { api, Row } from "../api";
+import { api } from "../api";
 import { date, Badge, Loading, Empty, PageTitle } from "../components/ui";
 
 export function Overview({
@@ -17,10 +18,13 @@ export function Overview({
   go: (s: string) => void;
   onToast: (s: string) => void;
 }) {
-  const [data, setData] = useState<Row | null>(null);
-  const [rows, setRows] = useState<Row[]>([]);
+  const [data, setData] = useState<OverviewData | null>(null);
+  const [rows, setRows] = useState<TicketSummary[]>([]);
   useEffect(() => {
-    Promise.all([api("/admin/overview"), api("/tickets")])
+    Promise.all([
+      api<OverviewData>("/admin/overview"),
+      api<TicketSummary[]>("/tickets"),
+    ])
       .then(([d, t]) => {
         setData(d);
         setRows(t);
@@ -29,7 +33,7 @@ export function Overview({
   }, []);
   if (!data) return <Loading />;
   const count = (status: string) =>
-    data.tickets.find((x: Row) => x.status === status)?.total || 0;
+    data.tickets.find((x) => x.status === status)?.total || 0;
   return (
     <>
       <PageTitle
@@ -105,7 +109,7 @@ export function Overview({
           <p className="run-total">
             <b>{data.modelRuns}</b> 次咨询请求
           </p>
-          {data.recentRuns.map((r: Row) => (
+          {data.recentRuns.map((r) => (
             <div className="run-row" key={r.id}>
               <i className={r.state === "COMPLETED" ? "ok" : ""} />
               <div>

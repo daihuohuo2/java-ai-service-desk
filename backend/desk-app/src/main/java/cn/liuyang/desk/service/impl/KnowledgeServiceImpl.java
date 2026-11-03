@@ -16,12 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class KnowledgeServiceImpl implements KnowledgeService {
   private final KnowledgeRepository repository;
-  private final Store s;
+  private final Store store;
   private final AiGateway ai;
 
-  public KnowledgeServiceImpl(KnowledgeRepository repository, Store s, AiGateway ai) {
+  public KnowledgeServiceImpl(KnowledgeRepository repository, Store store, AiGateway ai) {
     this.repository = repository;
-    this.s = s;
+    this.store = store;
     this.ai = ai;
   }
 
@@ -31,19 +31,23 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 
   @Transactional
   public KnowledgeDocument add(String title, String product, String content, String actor) {
-    if (content == null || content.isBlank() || content.length() > 30000)
+    if (content == null || content.isBlank() || content.length() > 30000) {
       throw new ApiException(400, "资料须为 1 至 30000 个字符");
+    }
     var chunks = split(content);
     repository.lockCatalog();
     int total = repository.activeChunkCount();
-    if (total + chunks.size() > 200) throw new ApiException(409, "当前版本最多索引 200 个有效片段，请先停用旧资料");
-    if (product != null && !product.isBlank()) repository.requireProduct(product);
-    else product = null;
+    if (total + chunks.size() > 200) {
+      throw new ApiException(409, "当前版本最多索引 200 个有效片段，请先停用旧资料");
+    }
+    if (product != null && !product.isBlank()) {
+      repository.requireProduct(product);
+    } else product = null;
     String id = Store.id();
     repository.insertDocument(id, title, product);
     int index = 0;
     for (String chunk : chunks) repository.insertChunk(id, ++index, chunk);
-    s.audit(actor, "KNOWLEDGE_CREATE", id, "上传资料，分段数 " + chunks.size());
+    store.audit(actor, "KNOWLEDGE_CREATE", id, "上传资料，分段数 " + chunks.size());
     return repository.document(id);
   }
 
@@ -53,10 +57,12 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     repository.requireDocument(id);
     if (active) {
       int total = repository.activatedChunkCount(id);
-      if (total > 200) throw new ApiException(409, "超过 200 个有效片段上限");
+      if (total > 200) {
+        throw new ApiException(409, "超过 200 个有效片段上限");
+      }
     }
     repository.setActive(active, id);
-    s.audit(actor, "KNOWLEDGE_STATE", id, active ? "启用资料" : "停用资料");
+    store.audit(actor, "KNOWLEDGE_STATE", id, active ? "启用资料" : "停用资料");
     return new ActiveResponse(active);
   }
 
@@ -70,12 +76,14 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     for (var row : rows) {
       heartbeat.run();
       float[] vector = ai.embed(row.getContent());
-      if (vector == null) break;
+      if (vector == null) {
+        break;
+      }
       heartbeat.run();
-      repository.saveVector(s.encode(vector), ai.embeddingName(), row.getId());
+      repository.saveVector(store.encode(vector), ai.embeddingName(), row.getId());
       indexed++;
     }
-    s.audit(actor, "KNOWLEDGE_INDEX", id, "向量化 " + indexed + " / " + rows.size() + " 个片段");
+    store.audit(actor, "KNOWLEDGE_INDEX", id, "向量化 " + indexed + " / " + rows.size() + " 个片段");
     return new IndexResult(indexed, rows.size(), indexed == rows.size());
   }
 
@@ -86,8 +94,9 @@ public class KnowledgeServiceImpl implements KnowledgeService {
       String name = p.getName();
       if (question.contains(name)
           || question.contains(p.getId())
-          || (name.length() >= 3 && question.contains(name.substring(name.length() - 3))))
+          || (name.length() >= 3 && question.contains(name.substring(name.length() - 3)))) {
         product = p.getId();
+      }
     }
     var all = repository.searchableChunks();
     boolean hasVector =
@@ -97,8 +106,11 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     float[] query = hasVector ? ai.embed(question) : null;
     var ranked = new ArrayList<KnowledgeHit>();
     for (var chunk : all) {
-      if (product != null && chunk.getProductId() != null && !product.equals(chunk.getProductId()))
+      if (product != null
+          && chunk.getProductId() != null
+          && !product.equals(chunk.getProductId())) {
         continue;
+      }
       String content = chunk.getContent();
       double lexical = lexical(question, content + chunk.getTitle());
       double vector = 0;
@@ -106,11 +118,13 @@ public class KnowledgeServiceImpl implements KnowledgeService {
           && chunk.getEmbedding() != null
           && ai.embeddingName().equals(chunk.getEmbeddingModel())) {
         try {
-          vector = cosine(query, s.json.readValue(chunk.getEmbedding(), float[].class));
+          vector = cosine(query, store.json.readValue(chunk.getEmbedding(), float[].class));
         } catch (Exception ignored) {
         }
       }
-      if (lexical < 0.025 && vector < 0.55) continue;
+      if (lexical < 0.025 && vector < 0.55) {
+        continue;
+      }
       var hit =
           new KnowledgeHit(
               chunk.getId(),

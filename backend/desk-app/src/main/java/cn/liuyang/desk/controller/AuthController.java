@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-  private final Store s;
+  private final Store store;
   private final Actor actor;
   private final HttpSessionCsrfTokenRepository csrf;
   private final cn.liuyang.desk.service.AuthService auth;
 
   public AuthController(
-      Store s,
+      Store store,
       Actor actor,
       HttpSessionCsrfTokenRepository csrf,
       cn.liuyang.desk.service.AuthService auth) {
-    this.s = s;
+    this.store = store;
     this.actor = actor;
     this.csrf = csrf;
     this.auth = auth;
@@ -63,7 +63,7 @@ public class AuthController {
     SecurityContextHolder.setContext(context);
     new HttpSessionSecurityContextRepository().saveContext(context, request, response);
     csrf.saveToken(null, request, response);
-    s.audit(user.getId(), "LOGIN", null, "用户登录");
+    store.audit(user.getId(), "LOGIN", null, "用户登录");
     return actor.current();
   }
 

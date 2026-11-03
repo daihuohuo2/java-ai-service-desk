@@ -67,27 +67,42 @@ class FullstackIntegrationTest {
   @Test
   void groupedValidationAndPathConsistencyProtectProductUpdates() throws Exception {
     String body = store.encode(new ProductInput("名称", "分类", 1, "说明", true));
-    mvc.perform(put("/api/admin/products/P100").with(user("admin").roles("ADMIN"))
-            .with(csrf()).contentType("application/json").content(body))
+    mvc.perform(
+            put("/api/admin/products/P100")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .contentType("application/json")
+                .content(body))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.data.id").exists());
     String mismatched = store.encode(new ProductInput("名称", "分类", 1, "说明", true, "P200"));
-    mvc.perform(put("/api/admin/products/P100").with(user("admin").roles("ADMIN"))
-            .with(csrf()).contentType("application/json").content(mismatched))
+    mvc.perform(
+            put("/api/admin/products/P100")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .contentType("application/json")
+                .content(mismatched))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.message").value("路径编号和请求中的商品编号必须一致"));
-    mvc.perform(post("/api/admin/products").with(user("admin").roles("ADMIN"))
-            .with(csrf()).contentType("application/json").content(mismatched))
+    mvc.perform(
+            post("/api/admin/products")
+                .with(user("admin").roles("ADMIN"))
+                .with(csrf())
+                .contentType("application/json")
+                .content(mismatched))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.data.id").exists());
   }
 
   @Test
   void customKindValidationReturnsFieldError() throws Exception {
-    mvc.perform(post("/api/tickets").with(user("customer").roles("CUSTOMER"))
-            .with(csrf()).header("Idempotency-Key", "enum-test-key")
-            .contentType("application/json")
-            .content("{\"kind\":\"INVALID\",\"subject\":\"标题\",\"description\":\"内容\"}"))
+    mvc.perform(
+            post("/api/tickets")
+                .with(user("customer").roles("CUSTOMER"))
+                .with(csrf())
+                .header("Idempotency-Key", "enum-test-key")
+                .contentType("application/json")
+                .content("{\"kind\":\"INVALID\",\"subject\":\"标题\",\"description\":\"内容\"}"))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.code").value(400))
         .andExpect(jsonPath("$.data.kind").value("不支持的工单类型"));

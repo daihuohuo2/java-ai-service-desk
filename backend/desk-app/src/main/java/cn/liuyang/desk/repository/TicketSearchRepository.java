@@ -32,11 +32,15 @@ public class TicketSearchRepository {
       args.add(owner);
     }
     if (status != null && !status.isBlank()) {
-      if (!STATES.contains(status)) throw new ApiException(400, "不支持的工单状态");
+      if (!STATES.contains(status)) {
+        throw new ApiException(400, "不支持的工单状态");
+      }
       sql.append(" AND t.status=?");
       args.add(status);
     }
-    if (query != null && query.length() > 120) throw new ApiException(400, "关键词最多 120 个字符");
+    if (query != null && query.length() > 120) {
+      throw new ApiException(400, "关键词最多 120 个字符");
+    }
     if (query != null && !query.isBlank()) {
       String pattern =
           "%"
@@ -91,7 +95,9 @@ public class TicketSearchRepository {
                 + " ORDER BY t.updated_at DESC,t.id LIMIT 1001",
             TicketSummary.class,
             filter.args().toArray());
-    if (rows.size() > 1000) throw new ApiException(400, "结果超过 1000 条，请缩小筛选范围后导出");
+    if (rows.size() > 1000) {
+      throw new ApiException(400, "结果超过 1000 条，请缩小筛选范围后导出");
+    }
     var lines = new ArrayList<List<?>>();
     lines.add(List.of("工单编号", "标题", "类型", "状态", "客户", "更新时间"));
     for (var row : rows)

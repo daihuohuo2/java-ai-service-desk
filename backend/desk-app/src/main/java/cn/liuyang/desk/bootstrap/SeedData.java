@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class SeedData implements ApplicationRunner {
-  private final Store s;
+  private final Store store;
   private final PasswordEncoder passwords;
 
   @Value("${desk.demo}")
@@ -33,26 +33,32 @@ public class SeedData implements ApplicationRunner {
   @Value("${server.servlet.session.cookie.secure}")
   boolean secure;
 
-  public SeedData(Store s, PasswordEncoder passwords) {
-    this.s = s;
+  public SeedData(Store store, PasswordEncoder passwords) {
+    this.store = store;
     this.passwords = passwords;
   }
 
   @Override
   @Transactional
   public void run(ApplicationArguments args) {
-    if (!demo && (admin.startsWith("Demo") || admin.length() < 14))
+    if (!demo && (admin.startsWith("Demo") || admin.length() < 14)) {
       throw new IllegalStateException(
           "Set a unique ADMIN_PASSWORD of at least 14 characters outside demo mode");
-    if ("production".equals(mode) && (demo || !secure))
+    }
+    if ("production".equals(mode) && (demo || !secure)) {
       throw new IllegalStateException("Production requires APP_DEMO=false and COOKIE_SECURE=true");
+    }
     addUser("admin", "admin", "林悦", "ADMIN", admin);
-    if (!demo) return;
+    if (!demo) {
+      return;
+    }
     addUser("customer", "customer", "陈一诺", "CUSTOMER", customer);
     addUser("customer2", "customer2", "周予安", "CUSTOMER", customer);
     addUser("agent", "agent", "顾青 · 客服", "AGENT", agent);
-    if (s.db.queryForObject("SELECT COUNT(*) FROM products", Integer.class) > 0) return;
-    s.db.update(
+    if (store.db.queryForObject("SELECT COUNT(*) FROM products", Integer.class) > 0) {
+      return;
+    }
+    store.db.update(
         "INSERT INTO products VALUES(?,?,?,?,?,?)",
         "P100",
         "栖光阅读灯",
@@ -60,7 +66,7 @@ public class SeedData implements ApplicationRunner {
         19900,
         "三档色温、触控调光，适合桌面阅读。",
         true);
-    s.db.update(
+    store.db.update(
         "INSERT INTO products VALUES(?,?,?,?,?,?)",
         "P200",
         "云屿保温杯",
@@ -68,7 +74,7 @@ public class SeedData implements ApplicationRunner {
         12900,
         "500 mL 不锈钢保温杯，杯盖可拆洗。",
         true);
-    s.db.update(
+    store.db.update(
         "INSERT INTO products VALUES(?,?,?,?,?,?)",
         "P300",
         "轻舟蓝牙耳机",
@@ -114,7 +120,7 @@ public class SeedData implements ApplicationRunner {
         "轻舟蓝牙耳机支持蓝牙连接和语音通话，充电盒使用 USB-C 接口。首次连接时打开充电盒并在手机蓝牙列表中选择轻舟耳机。\n\n"
             + "当前资料未提供防水等级、降噪等级和续航小时数，请勿据此推断；如连接异常，可将耳机放回充电盒后重新配对。");
     String t = "ticket-demo", now = Store.now();
-    s.db.update(
+    store.db.update(
         "INSERT INTO"
             + " tickets(id,ticket_no,owner_id,order_id,kind,subject,description,status,assignee_id,request_key,request_hash,version,created_at,updated_at)"
             + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -132,7 +138,7 @@ public class SeedData implements ApplicationRunner {
         1,
         now,
         now);
-    s.db.update(
+    store.db.update(
         "INSERT INTO ticket_events VALUES(?,?,?,?,?,?)",
         Store.id(),
         t,
@@ -140,7 +146,7 @@ public class SeedData implements ApplicationRunner {
         "CREATED",
         "包裹已经发出，想了解预计送达时间。",
         now);
-    s.db.update(
+    store.db.update(
         "INSERT INTO ticket_events VALUES(?,?,?,?,?,?)",
         Store.id(),
         t,
@@ -151,15 +157,17 @@ public class SeedData implements ApplicationRunner {
   }
 
   private void addUser(String id, String name, String display, String role, String pass) {
-    if (s.db.queryForObject("SELECT COUNT(*) FROM app_users WHERE username=?", Integer.class, name)
-        == 0)
-      s.db.update(
+    if (store.db.queryForObject(
+            "SELECT COUNT(*) FROM app_users WHERE username=?", Integer.class, name)
+        == 0) {
+      store.db.update(
           "INSERT INTO app_users VALUES(?,?,?,?,?)",
           id,
           name,
           display,
           passwords.encode(pass),
           role);
+    }
   }
 
   private void order(
@@ -171,7 +179,7 @@ public class SeedData implements ApplicationRunner {
       String status,
       String at,
       String delivered) {
-    s.db.update(
+    store.db.update(
         "INSERT INTO shop_orders VALUES(?,?,?,?,?,?,?,?,?)",
         id,
         no,
@@ -185,7 +193,7 @@ public class SeedData implements ApplicationRunner {
   }
 
   private void doc(String id, String title, String product, String content) {
-    s.db.update(
+    store.db.update(
         "INSERT INTO knowledge_documents VALUES(?,?,?,?,?,?)",
         id,
         title,
@@ -195,7 +203,7 @@ public class SeedData implements ApplicationRunner {
         Store.now());
     int n = 0;
     for (String para : content.split("\n\n"))
-      s.db.update(
+      store.db.update(
           "INSERT INTO knowledge_chunks VALUES(?,?,?,?,?,?)",
           Store.id(),
           id,

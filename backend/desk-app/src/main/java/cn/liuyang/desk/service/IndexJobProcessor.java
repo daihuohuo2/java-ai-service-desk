@@ -34,7 +34,9 @@ public class IndexJobProcessor {
     long now = System.currentTimeMillis();
     String token = Store.id();
     int claimed = repository.claim(now + LEASE_MS, token, id, now);
-    if (claimed == 0) return; // Another consumer owns it, or it has already finished.
+    if (claimed == 0) {
+      return;
+    } // Another consumer owns it, or it has already finished.
     var job = repository.getTask(id);
     int attempt = job.getAttempts();
     if (attempt > IndexJobService.MAX_ATTEMPTS) {
@@ -48,14 +50,20 @@ public class IndexJobProcessor {
               job.getActorId(),
               () -> {
                 int held = repository.renew(System.currentTimeMillis() + LEASE_MS, id, token);
-                if (held != 1) throw new IllegalStateException("Index job lease lost");
+                if (held != 1) {
+                  throw new IllegalStateException("Index job lease lost");
+                }
               });
       int indexed = result.indexed();
       int total = result.total();
       repository.progress(indexed, total, id, token);
-      if (!result.complete()) throw new IllegalStateException("Embedding unavailable");
+      if (!result.complete()) {
+        throw new IllegalStateException("Embedding unavailable");
+      }
       int finished = repository.succeed(id, token);
-      if (finished == 1) metrics.counter("desk.index.jobs", "result", "success").increment();
+      if (finished == 1) {
+        metrics.counter("desk.index.jobs", "result", "success").increment();
+      }
     } catch (RuntimeException exception) {
       finishFailure(id, attempt, token);
     }
@@ -66,9 +74,10 @@ public class IndexJobProcessor {
     int changed =
         repository.fail(
             state, System.currentTimeMillis() + 5000L * Math.min(attempt, 3), id, token);
-    if (changed == 1)
+    if (changed == 1) {
       metrics
           .counter("desk.index.jobs", "result", state.toLowerCase(java.util.Locale.ROOT))
           .increment();
+    }
   }
 }

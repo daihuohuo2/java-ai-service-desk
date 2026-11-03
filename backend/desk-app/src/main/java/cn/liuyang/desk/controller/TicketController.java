@@ -31,7 +31,11 @@ public class TicketController {
 
   record NewTicket(
       @Size(max = 40) String orderId,
-      @NotBlank @cn.liuyang.desk.common.validation.EnumValue(enumClass = cn.liuyang.desk.domain.TicketKind.class, message = "不支持的工单类型") String kind,
+      @NotBlank
+          @cn.liuyang.desk.common.validation.EnumValue(
+              enumClass = cn.liuyang.desk.domain.TicketKind.class,
+              message = "不支持的工单类型")
+          String kind,
       @NotBlank @Size(max = 120) String subject,
       @NotBlank @Size(max = 2000) String description) {}
 

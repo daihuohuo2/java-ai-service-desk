@@ -54,8 +54,11 @@ public class ProductServiceImpl implements ProductService {
             input.priceCents(),
             input.description().trim(),
             input.active());
-    if (create) products.insert(product);
-    else products.update(product);
+    if (create) {
+      products.insert(product);
+    } else {
+      products.update(product);
+    }
     products.advanceRevision();
     store.audit(actor, create ? "PRODUCT_CREATE" : "PRODUCT_UPDATE", product.id(), "保存商品");
     return product;

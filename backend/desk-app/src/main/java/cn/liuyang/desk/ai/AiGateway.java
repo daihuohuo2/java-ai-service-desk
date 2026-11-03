@@ -56,7 +56,9 @@ public class AiGateway {
   }
 
   public Plan plan(String question, List<String> history, List<KnowledgeHit> candidates) {
-    if (!enabled) return fallback(question, "RETRIEVAL_ONLY");
+    if (!enabled) {
+      return fallback(question, "RETRIEVAL_ONLY");
+    }
     try {
       // Short, request-local references avoid asking the model to copy UUIDs.
       var referenceIds = new LinkedHashMap<String, String>();
@@ -85,23 +87,34 @@ public class AiGateway {
                       .getOutput()
                       .getText());
       var node = json.readTree(text);
-      if (node == null || !node.isObject()) throw new IllegalArgumentException();
+      if (node == null || !node.isObject()) {
+        throw new IllegalArgumentException();
+      }
       String intent = node.path("intent").asString(),
           order = node.path("orderNumber").asString(""),
           kind = node.path("kind").asString("QUESTION");
       if (!Set.of("KNOWLEDGE", "ORDER", "AFTER_SALES", "HUMAN").contains(intent)
           || !TicketService.KINDS.contains(kind)
-          || order.length() > 40) throw new IllegalArgumentException();
-      if (!order.isEmpty() && !order.matches("ZS[0-9]{8,20}")) throw new IllegalArgumentException();
+          || order.length() > 40) {
+        throw new IllegalArgumentException();
+      }
+      if (!order.isEmpty() && !order.matches("ZS[0-9]{8,20}")) {
+        throw new IllegalArgumentException();
+      }
       var ids = new ArrayList<String>();
       var sourceNode = node.path("sourceIds");
-      if (!sourceNode.isArray() || sourceNode.size() > 3) throw new IllegalArgumentException();
+      if (!sourceNode.isArray() || sourceNode.size() > 3) {
+        throw new IllegalArgumentException();
+      }
       for (var item : sourceNode) {
-        if (!item.isString() || item.asString().length() > 40) throw new IllegalArgumentException();
+        if (!item.isString() || item.asString().length() > 40) {
+          throw new IllegalArgumentException();
+        }
         String id = referenceIds.get(item.asString());
         // An unknown reference invalidates all citations, preserving strict grounding.
-        if (id == null)
+        if (id == null) {
           return new Plan(intent, order, kind, List.of("__INVALID_SOURCE_REFERENCE__"), "OLLAMA");
+        }
         ids.add(id);
       }
       return new Plan(intent, order, kind, ids, "OLLAMA");
@@ -111,7 +124,9 @@ public class AiGateway {
   }
 
   public float[] embed(String text) {
-    if (!enabled) return null;
+    if (!enabled) {
+      return null;
+    }
     try {
       return bounded(() -> embeddings.embed(text));
     } catch (Exception e) {
@@ -124,7 +139,9 @@ public class AiGateway {
   }
 
   private <T> T bounded(Supplier<T> task) throws Exception {
-    if (!slots.tryAcquire()) throw new TimeoutException("Model capacity");
+    if (!slots.tryAcquire()) {
+      throw new TimeoutException("Model capacity");
+    }
     Future<T> future;
     try {
       future =

@@ -111,3 +111,66 @@ test("browser navigation preserves the requested orders page", async ({
   await page.goBack();
   await expect(page.locator(".order-card")).toContainText("ZS20261030002");
 });
+
+test("product create and update honor operation-specific validation", async ({
+  page,
+}, info) => {
+  await login(page, "管理员", "/products");
+  const name = "分组校验商品 " + Date.now();
+  await page.getByRole("button", { name: "新增商品", exact: true }).click();
+  await page.getByLabel("商品名称", { exact: true }).fill(name);
+  await page.getByLabel("分类", { exact: true }).fill("学习");
+  await page
+    .getByLabel("商品描述", { exact: true })
+    .fill("虚构商品，用于类型化 CRUD 验收");
+  await page.getByLabel("价格（分）", { exact: true }).fill("12345");
+  await page.getByRole("button", { name: "保存商品", exact: true }).click();
+  const row = page.getByRole("row").filter({ hasText: name });
+  await expect(row).toContainText("¥123.45");
+  await row.getByRole("button", { name: "编辑", exact: true }).click();
+  await page.getByLabel("价格（分）", { exact: true }).fill("23456");
+  await page.getByRole("button", { name: "保存商品", exact: true }).click();
+  await expect(row).toContainText("¥234.56");
+  await page.reload();
+  await expect(row).toContainText("¥234.56");
+  await page.screenshot({
+    path: info.outputPath("typed-product.png"),
+    fullPage: true,
+  });
+});
+
+test("typed SSE order result survives history reload", async ({
+  page,
+}, info) => {
+  await login(page, "客户", "/chat");
+  await page.getByLabel("输入咨询内容").fill("查询订单 ZS20261030001");
+  await page.getByRole("button", { name: "发送咨询", exact: true }).click();
+  await expect(page.locator(".message.assistant")).toContainText(
+    "ZS20261030001",
+  );
+  const response = await page.request.get("/api/chat/threads");
+  const thread = (await response.json()).data[0];
+  const messages = (
+    await (
+      await page.request.get(`/api/chat/threads/${thread.id}/messages`)
+    ).json()
+  ).data;
+  expect(
+    messages.find((message: { role: string }) => message.role === "assistant")
+      .detail.orders[0].order_no,
+  ).toBe("ZS20261030001");
+  await page.reload();
+  await page.getByRole("button", { name: /历史咨询/ }).click();
+  await page
+    .locator(".thread-list button")
+    .filter({ hasText: "查询订单 ZS20261030001" })
+    .first()
+    .click();
+  await expect(page.locator(".message.assistant")).toContainText(
+    "ZS20261030001",
+  );
+  await page.screenshot({
+    path: info.outputPath("typed-chat-history.png"),
+    fullPage: true,
+  });
+});

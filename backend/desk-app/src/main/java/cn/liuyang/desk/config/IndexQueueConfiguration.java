@@ -33,9 +33,10 @@ public class IndexQueueConfiguration {
 
   @RabbitListener(queues = QUEUE)
   public void consume(String jobId) {
-    if (jobId == null || !jobId.matches("[a-f0-9-]{36}"))
+    if (jobId == null || !jobId.matches("[a-f0-9-]{36}")) {
       throw new org.springframework.amqp.AmqpRejectAndDontRequeueException(
           "Invalid index job identifier");
+    }
     processor.process(jobId);
   }
 }

@@ -27,8 +27,12 @@ public class AuthServiceImpl implements AuthService {
     synchronized (failures) {
       failures.entrySet().removeIf(e -> time - e.getValue()[1] > 60000);
       var previous = failures.get(key);
-      if (previous != null && previous[0] >= 8) throw new ApiException(429, "登录尝试过多，请一分钟后重试");
-      if (failures.size() > 10000) throw new ApiException(429, "登录繁忙，请稍后重试");
+      if (previous != null && previous[0] >= 8) {
+        throw new ApiException(429, "登录尝试过多，请一分钟后重试");
+      }
+      if (failures.size() > 10000) {
+        throw new ApiException(429, "登录繁忙，请稍后重试");
+      }
     }
     var users = usersRepository.findByUsername(username);
     boolean valid =

@@ -13,7 +13,9 @@ public final class KnowledgeText {
       for (int i = 0; i < part.length(); i += 600)
         result.add(part.substring(i, Math.min(i + 600, part.length())));
     }
-    if (result.size() > 60) throw new ApiException(400, "单份资料最多 60 个片段");
+    if (result.size() > 60) {
+      throw new ApiException(400, "单份资料最多 60 个片段");
+    }
     return result;
   }
 
@@ -27,13 +29,17 @@ public final class KnowledgeText {
   public static double lexical(String a, String b) {
     var x = grams(a);
     var y = grams(b);
-    if (x.isEmpty()) return 0;
+    if (x.isEmpty()) {
+      return 0;
+    }
     long intersection = x.stream().filter(y::contains).count();
     return (double) intersection / x.size();
   }
 
   public static double cosine(float[] a, float[] b) {
-    if (a.length != b.length) return 0;
+    if (a.length != b.length) {
+      return 0;
+    }
     double sum = 0, na = 0, nb = 0;
     for (int i = 0; i < a.length; i++) {
       sum += a[i] * b[i];

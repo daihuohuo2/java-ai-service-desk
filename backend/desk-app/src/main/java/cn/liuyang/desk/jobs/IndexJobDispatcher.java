@@ -37,8 +37,9 @@ public class IndexJobDispatcher {
     // Repeat delivery is intentional: a crash before acknowledgement cannot lose the job.
     for (String id : jobs.ready(useRabbit ? 20 : 1)) {
       try {
-        if (useRabbit) rabbit.convertAndSend("", IndexQueueConfiguration.QUEUE, id);
-        else processor.process(id);
+        if (useRabbit) {
+          rabbit.convertAndSend("", IndexQueueConfiguration.QUEUE, id);
+        } else processor.process(id);
       } catch (RuntimeException failure) {
         LoggerFactory.getLogger(getClass())
             .warn("Index delivery unavailable; durable job retained");
