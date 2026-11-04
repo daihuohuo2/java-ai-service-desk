@@ -1,11 +1,12 @@
+import type { AuditEntry } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
-import { api, Row } from "../api";
+import { api } from "../api";
 import { date, Loading, PageTitle } from "../components/ui";
 
 export function Audit({ onToast }: { onToast: (s: string) => void }) {
-  const [rows, setRows] = useState<Row[] | null>(null);
+  const [rows, setRows] = useState<AuditEntry[] | null>(null);
   useEffect(() => {
-    api("/admin/audit")
+    api<AuditEntry[]>("/admin/audit")
       .then(setRows)
       .catch((e) => onToast(e.message));
   }, []);

@@ -1,13 +1,14 @@
+import type { Product, ProductDraft } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import { Plus } from "lucide-react";
-import { api, Row } from "../api";
+import { api } from "../api";
 import { money, Modal, PageTitle } from "../components/ui";
 
 export function Products({ onToast }: { onToast: (s: string) => void }) {
-  const [rows, setRows] = useState<Row[]>([]);
-  const [edit, setEdit] = useState<Row | null>(null);
+  const [rows, setRows] = useState<Product[]>([]);
+  const [edit, setEdit] = useState<ProductDraft | null>(null);
   const [busy, setBusy] = useState(false);
-  const load = () => api("/admin/products").then(setRows);
+  const load = () => api<Product[]>("/admin/products").then(setRows);
   useEffect(() => {
     load().catch((e) => onToast(e.message));
   }, []);
@@ -84,6 +85,7 @@ export function Products({ onToast }: { onToast: (s: string) => void }) {
                 await api("/admin/products" + (edit.id ? "/" + edit.id : ""), {
                   method: edit.id ? "PUT" : "POST",
                   body: JSON.stringify({
+                    id: edit.id,
                     name: edit.name,
                     category: edit.category,
                     priceCents: Math.round(Number(edit.price_cents)),
@@ -101,11 +103,13 @@ export function Products({ onToast }: { onToast: (s: string) => void }) {
               }
             }}
           >
-            {[
-              ["name", "商品名称"],
-              ["category", "分类"],
-              ["description", "商品描述"],
-            ].map(([key, label]) => (
+            {(
+              [
+                ["name", "商品名称"],
+                ["category", "分类"],
+                ["description", "商品描述"],
+              ] as const
+            ).map(([key, label]) => (
               <label key={key}>
                 {label}
                 <input
@@ -128,7 +132,7 @@ export function Products({ onToast }: { onToast: (s: string) => void }) {
                 step={1}
                 value={edit.price_cents}
                 onChange={(e) =>
-                  setEdit({ ...edit, price_cents: e.target.value })
+                  setEdit({ ...edit, price_cents: Number(e.target.value) })
                 }
               />
             </label>

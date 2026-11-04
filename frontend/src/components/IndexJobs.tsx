@@ -43,7 +43,11 @@ export function IndexJobs({
   async function submit() {
     setBusy(true);
     try {
-      const job = await post("/knowledge/jobs", {}, crypto.randomUUID());
+      const job = await post<IndexJob>(
+        "/knowledge/jobs",
+        {},
+        crypto.randomUUID(),
+      );
       setJobs((old) => [job, ...old].slice(0, 50));
       onToast("索引任务已提交，可以继续使用其他页面");
     } catch (failure) {
@@ -104,7 +108,7 @@ export function IndexJobs({
                         className="text-btn"
                         onClick={async () => {
                           try {
-                            const updated = await post(
+                            const updated = await post<IndexJob>(
                               "/knowledge/jobs/" + job.id + "/retry",
                             );
                             setJobs((old) =>

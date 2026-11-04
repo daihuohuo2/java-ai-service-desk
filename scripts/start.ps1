@@ -4,7 +4,7 @@ $root = Split-Path $PSScriptRoot -Parent
 Push-Location $root
 try {
     & "$PSScriptRoot\init-env.ps1"
-    if (!(Test-Path backend/target/service-desk-1.0.0.jar) -or !(Test-Path frontend/dist/index.html)) { throw 'Run scripts/build.ps1 first, or use the delivery package.' }
+    if (!(Test-Path backend/desk-app/target/service-desk-1.0.0.jar) -or !(Test-Path frontend/dist/index.html)) { throw 'Run scripts/build.ps1 first, or use the delivery package.' }
     $baseFile = if ($MySql) { 'compose.mysql.yaml' } else { 'compose.yaml' }
     $composeArgs = @('compose','-f',$baseFile)
     if ($Middleware) { $composeArgs += @('-f','compose.middleware.yaml') }

@@ -1,0 +1,18 @@
+{
+  "id": "unknown-product",
+  "question": "火星牌洗衣机的价格和参数是什么？",
+  "pass": true,
+  "latencyMs": 5032,
+  "result": {
+    "answer": "现有资料不足以确认这个问题。我不会推测未提供的产品参数或售后承诺。您可以补充商品名称，或创建人工咨询工单。",
+    "citations": [],
+    "intent": "KNOWLEDGE",
+    "latencyMs": 5012,
+    "mode": "MODEL_UNAVAILABLE",
+    "orders": null,
+    "promptVersion": "planner-v2-short-refs",
+    "proposal": null,
+    "runId": "d4706e53-9c7a-448d-b729-670d346fcd2d",
+    "tool": "knowledge.search"
+  }
+}

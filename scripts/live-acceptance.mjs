@@ -9,7 +9,7 @@ class Client {
     const r=await fetch(base+'/api'+route,{method,headers:{'Content-Type':'application/json',Cookie:[...this.cookies].map(([k,v])=>k+'='+v).join('; '),...(method!=='GET'?{'X-CSRF-TOKEN':this.csrf}:{}),...headers},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(180000)});
     for(const cookie of r.headers.getSetCookie()){const first=cookie.split(';')[0],i=first.indexOf('=');this.cookies.set(first.slice(0,i),first.slice(i+1));}
     const text=await r.text();let data;try{data=text?JSON.parse(text):null}catch{data={raw:text.slice(0,400)}};
-    if(!r.ok)throw new Error(`${method} ${route}: ${r.status} ${JSON.stringify(data)}`);return data;
+    if(!r.ok)throw new Error(`${method} ${route}: ${r.status} ${JSON.stringify(data)}`);return data?.code===0?data.data:data;
   }
   async login(username,password){this.csrf=(await this.call('/auth/csrf')).token;await this.call('/auth/login','POST',{username,password});this.csrf=(await this.call('/auth/csrf')).token;}
   async ask(question,key=crypto.randomUUID(),thread){thread||=(await this.call('/chat/threads','POST',{})).id;return this.call('/chat/ask','POST',{threadId:thread,question},{'Idempotency-Key':key})}

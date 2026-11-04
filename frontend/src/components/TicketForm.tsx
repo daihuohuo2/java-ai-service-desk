@@ -1,5 +1,6 @@
+import type { Order } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
-import { post, Row } from "../api";
+import { post } from "../api";
 import { kindName, Modal } from "../components/ui";
 import { validateTicket } from "../validation";
 
@@ -10,7 +11,7 @@ export function TicketForm({
   onToast,
   close,
 }: {
-  orders: Row[];
+  orders: Order[];
   selected?: string;
   onDone: () => void;
   onToast: (s: string) => void;

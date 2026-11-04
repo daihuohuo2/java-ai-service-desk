@@ -2,7 +2,7 @@ import {test,afterEach} from 'node:test';
 import assert from 'node:assert/strict';
 import {api,refreshCsrf,askStream} from '../src/api.ts';
 const original=globalThis.fetch;afterEach(()=>globalThis.fetch=original);
-const json=(obj,status=200)=>new Response(JSON.stringify(obj),{status,headers:{'Content-Type':'application/json'}});
+const json=(obj,status=200)=>new Response(JSON.stringify({code:status===200?0:status,message:obj.error||"成功",data:status===200?obj:null}),{status,headers:{'Content-Type':'application/json'}});
 const stream=(text,size=1)=>new Response(new ReadableStream({start(c){const b=new TextEncoder().encode(text);for(let i=0;i<b.length;i+=size)c.enqueue(b.slice(i,i+size));c.close();}}),{headers:{'Content-Type':'text/event-stream'}});
 test('mutations carry CSRF and same-origin session credentials',async()=>{let seen;globalThis.fetch=async(url,opts)=>url.endsWith('/csrf')?json({token:'fresh-token'}):(seen=opts,json({id:1}));await refreshCsrf();assert.deepEqual(await api('/tickets',{method:'POST',body:'{}'}),{id:1});assert.equal(seen.headers['X-CSRF-TOKEN'],'fresh-token');assert.equal(seen.credentials,'include');});
 test('expired session error reaches the UI',async()=>{globalThis.fetch=async()=>json({error:'请先登录'},401);await assert.rejects(api('/orders'),/请先登录/);});

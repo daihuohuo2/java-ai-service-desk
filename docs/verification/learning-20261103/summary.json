@@ -1,0 +1,311 @@
+{
+  "date": "2026-11-03",
+  "branch": "learning/typed-layers-20261103",
+  "code_commit": "e0ba7061182ac2018a5efc5b697f4ddd3cd26315",
+  "baseline_commit": "4ddb270",
+  "backend": {
+    "main_java_files": 97,
+    "service_contracts": 9,
+    "business_map_carriers": 0,
+    "h2": {
+      "tests": 113,
+      "passed": 110,
+      "skipped": 3,
+      "suites": [
+        {
+          "suite": "cn.liuyang.desk.ai.AiGatewayTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.cache.MiddlewareIntegrationTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3
+        },
+        {
+          "suite": "cn.liuyang.desk.DeskIntegrationTest",
+          "tests": 36,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.FullstackIntegrationTest",
+          "tests": 36,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.RedisCatalogCacheTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.service.GroundingTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.service.OrderServiceTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.domain.DtoValidationTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "suite": "cn.liuyang.desk.domain.TicketPolicyTest",
+          "tests": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ]
+    },
+    "postgres_redis_rabbitmq": {
+      "tests": 113,
+      "passed": 113,
+      "skipped": 0,
+      "evidence": "modules-databases-summary.txt"
+    },
+    "mysql": {
+      "tests": 113,
+      "passed": 110,
+      "skipped": 3,
+      "evidence": "modules-databases-summary.txt"
+    },
+    "isolated_unit_profile": {
+      "tests": 38,
+      "passed": 38
+    }
+  },
+  "frontend": {
+    "typescript_strict": true,
+    "explicit_any_types": 0,
+    "unit_tests": 13,
+    "unit_passed": 13,
+    "chromium_tests": 18,
+    "chromium_passed": 18,
+    "viewports": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  "learning_labs": [
+    "FullstackBasics: five assertions passed",
+    "ConcurrencyLab: max concurrency, resource release, cancellation passed",
+    "IdempotencyVersionLab: duplicate, collision, owner, stale-version assertions passed"
+  ],
+  "packaging": {
+    "backend_image": "desk-learning-20261103:local",
+    "docker_build_passed": true,
+    "jar_sha256": "53c2495ce2e2ba8a9f8e16b77a48bea10c1c3f0d2f8451635a2bd2e9853f2ed9"
+  },
+  "scope": "Local fictional data. PG/MySQL/middleware used isolated containers. AI was mocked in Java integration tests. Browser used H2 and AI disabled. Real-model checks used separate H2 learning instance and existing local Ollama. No remote push or designated-server deployment.",
+  "http": {
+    "timestamp": "2026-11-03T13:17:08.857Z",
+    "baseUrl": "http://127.0.0.1:21984",
+    "tests": 19,
+    "passed": 19,
+    "results": [
+      {
+        "name": "unauthenticated orders rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login without CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "login rotates session",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "own orders only",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign order hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot read admin audit",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "agent cannot manage knowledge",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "untrusted origin rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "trusted origin accepted",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "bad CSRF rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent creation is idempotent",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "same key different body rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign ticket hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "concurrent stale version rejected",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "customer cannot advance work status",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "foreign conversation hidden",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "SSE phases and result delivered",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "logout succeeds",
+        "pass": true,
+        "detail": ""
+      },
+      {
+        "name": "session invalid after logout",
+        "pass": true,
+        "detail": ""
+      }
+    ]
+  },
+  "fullstack": {
+    "timestamp": "2026-11-03T13:17:21.119Z",
+    "baseUrl": "http://127.0.0.1:21984",
+    "tests": 14,
+    "passed": 14,
+    "indexJob": {
+      "id": "2d29b9db-44a1-46af-a947-43aa7adbfc91",
+      "documentId": "doc-earbuds",
+      "state": "SUCCEEDED",
+      "attempts": 1,
+      "indexed": 2,
+      "total": 2,
+      "error": null,
+      "createdAt": "2026-11-03T13:17:10.400639400Z",
+      "updatedAt": "2026-11-03T13:17:20.714477200Z"
+    },
+    "results": [
+      {
+        "name": "typed order page reports exact total",
+        "pass": true
+      },
+      {
+        "name": "second page is distinct",
+        "pass": true
+      },
+      {
+        "name": "paged orders retain owner isolation",
+        "pass": true
+      },
+      {
+        "name": "customer cannot submit index job",
+        "pass": true
+      },
+      {
+        "name": "product cache path serves new product",
+        "pass": true
+      },
+      {
+        "name": "product update switches cache generation",
+        "pass": true
+      },
+      {
+        "name": "deactivated product disappears immediately",
+        "pass": true
+      },
+      {
+        "name": "async indexing accepts durable job",
+        "pass": true
+      },
+      {
+        "name": "index submission idempotency",
+        "pass": true
+      },
+      {
+        "name": "real worker completes real model embeddings",
+        "pass": true
+      },
+      {
+        "name": "completed index job cannot be retried",
+        "pass": true
+      },
+      {
+        "name": "customer paged tickets remain private",
+        "pass": true
+      },
+      {
+        "name": "CSV download is available",
+        "pass": true
+      },
+      {
+        "name": "public frontend does not expose metrics",
+        "pass": true
+      }
+    ]
+  },
+  "real_model": {
+    "timestamp": "2026-11-03T13:17:39.017Z",
+    "baseUrl": "http://127.0.0.1:21984",
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "tests": 13,
+    "passed": 13,
+    "failed": [],
+    "scope": "Local real-model calls on fictional seed data. Assertions are bounded checks, not a general accuracy benchmark.",
+    "mode_counts": {
+      "OLLAMA": 11,
+      "MODEL_UNAVAILABLE": 1
+    }
+  }
+}

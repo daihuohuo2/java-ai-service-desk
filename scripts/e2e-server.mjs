@@ -19,7 +19,7 @@ function run(command,args,env,cwd=root) {
   child.on('exit',code=>{if(!closing)stop(code||1)});
   return child;
 }
-run('java',['-Dfile.encoding=UTF-8','-jar',path.join(root,'backend/target/service-desk-1.0.0.jar')],{
+run('java',['-Dfile.encoding=UTF-8','-jar',path.join(root,'backend/desk-app/target/service-desk-1.0.0.jar')],{
   PORT:'21980', BIND_ADDRESS:'127.0.0.1',
   DATABASE_URL:'jdbc:h2:mem:browser_tests;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1',
   DATABASE_USER:'sa', DATABASE_PASSWORD:'', SPRING_PROFILES_ACTIVE:'',

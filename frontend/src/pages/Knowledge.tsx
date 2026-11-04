@@ -1,3 +1,4 @@
+import type { KnowledgeDocument, Product, IndexResult } from "../types";
 import React, { useEffect, useState, useRef, FormEvent } from "react";
 import {
   ArrowUpRight,
@@ -7,23 +8,23 @@ import {
   Upload,
   Loader2,
 } from "lucide-react";
-import { api, post, Row } from "../api";
+import { api, post } from "../api";
 import { Modal, PageTitle } from "../components/ui";
 import { IndexJobs } from "../components/IndexJobs";
 
 export function Knowledge({ onToast }: { onToast: (s: string) => void }) {
-  const [docs, setDocs] = useState<Row[]>([]);
-  const [products, setProducts] = useState<Row[]>([]);
+  const [docs, setDocs] = useState<KnowledgeDocument[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [product, setProduct] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
-  const load = () => api("/knowledge").then(setDocs);
+  const load = () => api<KnowledgeDocument[]>("/knowledge").then(setDocs);
   useEffect(() => {
     load().catch((e) => onToast(e.message));
-    api("/products").then(setProducts);
+    api<Product[]>("/products").then(setProducts);
   }, []);
   return (
     <>
@@ -39,7 +40,7 @@ export function Knowledge({ onToast }: { onToast: (s: string) => void }) {
               onClick={async () => {
                 setBusy(true);
                 try {
-                  const r = await post("/knowledge/reindex");
+                  const r = await post<IndexResult>("/knowledge/reindex");
                   onToast(
                     `向量索引：完成 ${r.indexed} / ${r.total} 个片段${r.complete ? "" : "，模型不可用，仍可关键词检索"}`,
                   );

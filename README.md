@@ -9,6 +9,12 @@ Java + Spring AI customer service desk with local Ollama models, grounded knowle
 
 ![智能客服与原文引用](docs/verification/ui/chat-grounded.png)
 
+## Java 全栈学习版（2026-11-03）
+
+从 [学习入口](docs/learning/README.md) 开始。已补充分层包、实体/DTO、MyBatis-Plus、Lombok/MapStruct、服务接口与实现、分组与自定义校验、统一 JSON、Mockito 单测和 Maven 三模块。订单的执行代码现位于 `backend/desk-app/src/main/java/cn/liuyang/desk/service/impl/OrderServiceImpl.java`。
+
+先看 [订单请求的逐句与变量讲解](docs/learning/01-订单请求与变量轨迹.md)，再按 [真实 Git 演进](docs/learning/05-Git演进与动手练习.md) 学习。可执行 JAR 路径是 `backend/desk-app/target/service-desk-1.0.0.jar`。本分支是本地升级；旧 CI 徽章和旧日期报告不代表此次改动已经在远程执行。
+
 ## 立即体验
 
 完成下方构建和启动后，打开 **http://127.0.0.1:19082/**。这是本地入口，项目未提供公共在线演示服务；Docker Desktop 须处于运行状态。
@@ -26,9 +32,9 @@ Java + Spring AI customer service desk with local Ollama models, grounded knowle
 
 ## 技术实现
 
-刚学 Java？从 [全栈学习路线](docs/learning/全栈学习路线.md) 开始，按 [文件阅读顺序](docs/learning/文件阅读顺序.md) 阅读。先运行 `learning/FullstackBasics.java`，再跟踪 `OrderController → OrderService → OrderMapper → SQL`，最后进入 AI。
+刚学 Java？从 [全栈学习路线](docs/learning/全栈学习路线.md) 开始，按 [文件阅读顺序](docs/learning/文件阅读顺序.md) 阅读。先运行 `learning/FullstackBasics.java`，再跟踪 `OrderController → OrderServiceImpl → OrderMapper → SQL`，最后进入 AI。
 
-- Java 21 / Spring Boot 4.1.2 / Spring AI 2.0.2 / Spring Security / MyBatis + JDBC / Flyway。
+- Java 21 / Spring Boot 4.1.2 / Spring AI 2.0.2 / Spring Security / MyBatis-Plus + 类型化 JDBC / Flyway / MapStruct / Lombok。
 - React 19 / TypeScript / Vite / React Router：分页面、登录上下文、表单校验、服务端分页筛选、CSV 导出及手机布局。
 - PostgreSQL 17 默认容器部署；H2 轻量开发与测试；MySQL 8.4 独立配置与迁移脚本。
 - 可选 Redis 商品缓存；SQL 持久化的知识索引任务、RabbitMQ 消费、租约与重试；Micrometer + Prometheus 监控配置。

@@ -1,0 +1,28 @@
+{
+  "id": "human",
+  "question": "我需要人工客服帮助，请帮我创建咨询草稿",
+  "pass": true,
+  "latencyMs": 907,
+  "result": {
+    "answer": "已整理一份待确认的工单草稿。请核对内容后点击“确认创建工单”；此时还没有创建工单，也未批准退款。草稿 15 分钟内有效。",
+    "citations": [],
+    "intent": "HUMAN",
+    "latencyMs": 892,
+    "mode": "OLLAMA",
+    "orders": null,
+    "promptVersion": "planner-v2-short-refs",
+    "proposal": {
+      "created_at": "2026-11-03T13:17:38.385737100Z",
+      "description": "我需要人工客服帮助，请帮我创建咨询草稿",
+      "expires_at": "2026-11-03T13:32:38.385737100Z",
+      "id": "37cc98e6-6a72-4169-898b-c34018729dca",
+      "kind": "QUESTION",
+      "order_id": null,
+      "owner_id": "customer",
+      "subject": "人工咨询申请",
+      "ticket_id": null
+    },
+    "runId": "73e8d056-6df0-4679-b675-a4d312c069e3",
+    "tool": "tickets.prepareDraft"
+  }
+}

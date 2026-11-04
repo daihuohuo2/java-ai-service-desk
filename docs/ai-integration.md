@@ -36,7 +36,7 @@ temperature=0，format=json，num_ctx=4096，num_predict=256；模型驻留默�
 
 ## 提示词与复现
 
-完整系统提示词唯一来源为 `backend/src/main/java/cn/liuyang/desk/AiGateway.java` 的 `SYSTEM` 常量，版本 `planner-v2-short-refs`。真实测试脚本 `scripts/live-acceptance.mjs` 保留问题、判定、结果、耗时；升级后的证据位于 `docs/verification/boot-upgrade-20261031`，`docs/verification/live-postgres` 是 2026-10-30 旧版本的历史记录。
+完整系统提示词唯一来源为 `backend/desk-app/src/main/java/cn/liuyang/desk/ai/AiGateway.java` 的 `SYSTEM` 常量，版本 `planner-v2-short-refs`。真实测试脚本 `scripts/live-acceptance.mjs` 保留问题、判定、结果、耗时；升级后的证据位于 `docs/verification/boot-upgrade-20261031`，`docs/verification/live-postgres` 是 2026-10-30 旧版本的历史记录。
 
 ```powershell
 $env:BASE_URL='http://127.0.0.1:19082'

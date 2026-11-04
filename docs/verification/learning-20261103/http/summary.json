@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-11-03T13:17:08.857Z",
+  "baseUrl": "http://127.0.0.1:21984",
+  "tests": 19,
+  "passed": 19,
+  "results": [
+    {
+      "name": "unauthenticated orders rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "login without CSRF rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "login rotates session",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "own orders only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foreign order hidden",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "customer cannot read admin audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "agent cannot manage knowledge",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "untrusted origin rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "trusted origin accepted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "bad CSRF rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "concurrent creation is idempotent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "same key different body rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foreign ticket hidden",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "concurrent stale version rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "customer cannot advance work status",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "foreign conversation hidden",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "SSE phases and result delivered",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "logout succeeds",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "session invalid after logout",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

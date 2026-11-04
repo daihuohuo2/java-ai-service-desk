@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-11-03T13:17:39.017Z",
+  "baseUrl": "http://127.0.0.1:21984",
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "tests": 13,
+  "passed": 13,
+  "failed": [],
+  "scope": "Local real-model calls on fictional seed data. Assertions are bounded checks, not a general accuracy benchmark."
+}
